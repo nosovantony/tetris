@@ -1,0 +1,231 @@
+{
+  "startedAt": "2026-11-02T23:28:55.765Z",
+  "runtime": "local workerd",
+  "caveat": "HTTP and application wall times are not CPU time. CPU is reported only by Cloudflare tail, if available. Synthetic bots, not human play or worst-case proof.",
+  "requests": [
+    {
+      "id": "marathon-0",
+      "status": 200,
+      "expectedStatus": 200,
+      "wallMs": 251.93537199999992,
+      "bytes": 45446,
+      "body": {
+        "runId": "63658c8c-02d4-449d-a458-b85ecd6778a3",
+        "guestId": "729ae48f-52b4-49ae-8fbc-77a0f69f52ae",
+        "rulesVersion": "marathon-150-v1",
+        "playerName": "Measurement fixture",
+        "score": 15945272,
+        "lines": 1500,
+        "level": 150,
+        "durationTicks": 14607,
+        "isClear": true,
+        "expiresAt": 1793734139192
+      }
+    },
+    {
+      "id": "marathon-1",
+      "status": 200,
+      "expectedStatus": 200,
+      "wallMs": 177.85750600000028,
+      "bytes": 45446,
+      "body": {
+        "runId": "fbfca6a5-9582-4479-9ed6-29ba367f2641",
+        "guestId": "10ffe8ee-38e4-413c-8072-500f1fcc32fd",
+        "rulesVersion": "marathon-150-v1",
+        "playerName": "Measurement fixture",
+        "score": 15945272,
+        "lines": 1500,
+        "level": 150,
+        "durationTicks": 14607,
+        "isClear": true,
+        "expiresAt": 1793734139445
+      }
+    },
+    {
+      "id": "marathon-2",
+      "status": 200,
+      "expectedStatus": 200,
+      "wallMs": 163.2570080000005,
+      "bytes": 45446,
+      "body": {
+        "runId": "02634869-9616-43d9-ad4d-4b1240fac5ab",
+        "guestId": "4d68571b-d730-4642-8813-60035ff96662",
+        "rulesVersion": "marathon-150-v1",
+        "playerName": "Measurement fixture",
+        "score": 15945272,
+        "lines": 1500,
+        "level": 150,
+        "durationTicks": 14607,
+        "isClear": true,
+        "expiresAt": 1793734139623
+      }
+    },
+    {
+      "id": "timeout-0",
+      "status": 200,
+      "expectedStatus": 200,
+      "wallMs": 1178.3713779999998,
+      "bytes": 33525,
+      "body": {
+        "runId": "a500cd5c-9ab4-43d1-867c-0b4f42dd6ade",
+        "guestId": "cdd1f4ce-4743-433f-a8eb-0d7c0d0e33d8",
+        "rulesVersion": "marathon-150-v1",
+        "playerName": "Measurement fixture",
+        "score": 462130,
+        "lines": 266,
+        "level": 27,
+        "durationTicks": 648000,
+        "isClear": false,
+        "expiresAt": 1793734139802
+      }
+    },
+    {
+      "id": "timeout-1",
+      "status": 200,
+      "expectedStatus": 200,
+      "wallMs": 1252.0201189999998,
+      "bytes": 33525,
+      "body": {
+        "runId": "b477d681-3264-43df-b734-c485c7ad6ee0",
+        "guestId": "1d00805f-4030-4918-83ea-fe9972e95404",
+        "rulesVersion": "marathon-150-v1",
+        "playerName": "Measurement fixture",
+        "score": 462130,
+        "lines": 266,
+        "level": 27,
+        "durationTicks": 648000,
+        "isClear": false,
+        "expiresAt": 1793734140981
+      }
+    },
+    {
+      "id": "timeout-2",
+      "status": 200,
+      "expectedStatus": 200,
+      "wallMs": 1109.063389,
+      "bytes": 33525,
+      "body": {
+        "runId": "76c106ef-68f7-453f-ae4e-73e84d3c074a",
+        "guestId": "22ab6f19-eb0c-45e2-b7c8-234ad8e5bbd1",
+        "rulesVersion": "marathon-150-v1",
+        "playerName": "Measurement fixture",
+        "score": 462130,
+        "lines": 266,
+        "level": 27,
+        "durationTicks": 648000,
+        "isClear": false,
+        "expiresAt": 1793734142233
+      }
+    },
+    {
+      "id": "adversarial-0",
+      "status": 200,
+      "expectedStatus": 200,
+      "wallMs": 1169.2641910000011,
+      "bytes": 100677,
+      "body": {
+        "runId": "fd54494c-574f-4f1a-a9be-40fdd8283c97",
+        "guestId": "c334c061-784b-4168-872c-404d844211e4",
+        "rulesVersion": "marathon-150-v1",
+        "playerName": "Measurement fixture",
+        "score": 462130,
+        "lines": 266,
+        "level": 27,
+        "durationTicks": 648000,
+        "isClear": false,
+        "expiresAt": 1793734143389
+      }
+    },
+    {
+      "id": "adversarial-1",
+      "status": 200,
+      "expectedStatus": 200,
+      "wallMs": 1270.0071660000012,
+      "bytes": 100677,
+      "body": {
+        "runId": "64727149-6af0-45b7-be5d-2b15bf5e6ccd",
+        "guestId": "363ae9b1-5d78-47d8-a35c-84af23f56d06",
+        "rulesVersion": "marathon-150-v1",
+        "playerName": "Measurement fixture",
+        "score": 462130,
+        "lines": 266,
+        "level": 27,
+        "durationTicks": 648000,
+        "isClear": false,
+        "expiresAt": 1793734144559
+      }
+    },
+    {
+      "id": "adversarial-2",
+      "status": 200,
+      "expectedStatus": 200,
+      "wallMs": 1306.7905690000007,
+      "bytes": 100677,
+      "body": {
+        "runId": "d23a4b04-c9ff-48e7-9377-8355554973a5",
+        "guestId": "3ce1a70a-1ad1-4bd9-98ec-3394b518efb4",
+        "rulesVersion": "marathon-150-v1",
+        "playerName": "Measurement fixture",
+        "score": 462130,
+        "lines": 266,
+        "level": 27,
+        "durationTicks": 648000,
+        "isClear": false,
+        "expiresAt": 1793734145829
+      }
+    },
+    {
+      "id": "unfinished-max-duration-0",
+      "status": 422,
+      "expectedStatus": 422,
+      "wallMs": 1194.8259710000002,
+      "bytes": 100677,
+      "body": {
+        "error": "Принимаются только завершённые партии"
+      }
+    },
+    {
+      "id": "unfinished-max-duration-1",
+      "status": 422,
+      "expectedStatus": 422,
+      "wallMs": 1290.4811980000013,
+      "bytes": 100677,
+      "body": {
+        "error": "Принимаются только завершённые партии"
+      }
+    },
+    {
+      "id": "unfinished-max-duration-2",
+      "status": 422,
+      "expectedStatus": 422,
+      "wallMs": 1236.7427230000012,
+      "bytes": 100677,
+      "body": {
+        "error": "Принимаются только завершённые партии"
+      }
+    }
+  ],
+  "cleanup": null,
+  "fixtureManifestSha256": "2a9b1dce7be80b8e61bb1b480280619e93285faabd28a2561843c4ddf4320f4b",
+  "sources": {
+    "src/lib/game/bag.ts": "e64089bdfea6cc11ffb7dcd964cf12a59d8ca5beb1b00d7405410848598849e1",
+    "src/lib/game/board.ts": "782bbb89464219569d1959bd1fe4611f53ebeb4f1fc7e287693ef5c9491bf8ba",
+    "src/lib/game/checkpoint.ts": "3f533c16bdada0ad074162440d827e72807b4bcd7a7174fe9477a18f2fa3d64a",
+    "src/lib/game/codec.ts": "6209d72d921ef23d9f0c64488fb0d4ed72843440aa0a650a55307a142e4e040d",
+    "src/lib/game/constants.ts": "f3ffca1fdadb68ee00b6259bb2fda6dc19f5aa9401e0772d394f20d82a044694",
+    "src/lib/game/engine.ts": "330f9827d08532401bdd4ab92252d57d881eb095f234e8f929640a5aefb4ea01",
+    "src/lib/game/index.ts": "c9270ceb9e6c6a0ba6ef9199883e4d6b84eeb73dea72c45db7ba04972b1b6ca7",
+    "src/lib/game/levels.ts": "b637aa00df319c33ae0e068684592c234e05aa31ad931740d8da92141f3eb8c8",
+    "src/lib/game/random.ts": "e9111faa36b0e680aae907bd44b571e05f568960324861d1a06d942215bd9a19",
+    "src/lib/game/scoring.ts": "0aea2a67eae29ad6c0e7cdecbddff380bfb4bc5daf519bc60138da0c993c1560",
+    "src/lib/game/session.ts": "39fb1c79b6ebf05b144aa29bd7e46d85b4a63ec447b4ae341a3707253556f540",
+    "src/lib/game/simulator.ts": "69e50556eabfcf164e7a759e8b25fbfc45a3e93e9a88995ff86820f6772d9342",
+    "src/lib/game/srs.ts": "8842c7c399aa83458969af8295c9de1cb222a8e5d53f2c74ba421cc48d09030c",
+    "src/lib/game/types.ts": "fc1e785d864ecb61ac24a979e2b64c636416bbfb09489fedee2002ba824a43ed",
+    "src/lib/shared/runs.ts": "a25e4a7557c6c5cb3c878a36d95341de37c9e9ce9957c9275951f9ab009dd0c9",
+    "src/lib/shared/leaderboard.ts": "34ef29bb642f3fd6a160c76708de595535fbde826ba3b3310409e300c7b481a5",
+    "src/lib/server/http.ts": "87ce01d1c5e1321c8ee9d8b2016ea26741859e80157c2d1072c9d5dbdbd66663",
+    "workers/backend/validation.ts": "7d6a9d3c6740a050160768c80ff2154be3f8f9554ac1dba029ccd08b522d736f"
+  },
+  "finishedAt": "2026-11-02T23:29:10.877Z"
+}

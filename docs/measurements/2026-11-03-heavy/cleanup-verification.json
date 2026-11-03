@@ -1,0 +1,19 @@
+{
+  "checkedAt": "2026-11-03T00:12:33.517Z",
+  "remainingProbeWorkers": [],
+  "remainingProbeNamespaces": [],
+  "versions": {
+    "tetris-web": [
+      "7f3f11e2-8099-4103-88c5-8f209f52f2a6"
+    ],
+    "tetris-backend": [
+      "941f817e-0f12-46c9-b8f7-86f0ca18f475"
+    ],
+    "tetris-web-staging": [
+      "e89170fe-5e0c-41e6-bf04-3148880e6426"
+    ],
+    "tetris-backend-staging": [
+      "97265a51-29f2-46a4-a0a0-3b819f00c1e0"
+    ]
+  }
+}

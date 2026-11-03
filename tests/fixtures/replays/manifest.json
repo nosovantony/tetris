@@ -1,0 +1,82 @@
+{
+	"version": 1,
+	"rulesVersion": "marathon-150-v1",
+	"generator": {
+		"seed": 42,
+		"lookahead": 4
+	},
+	"fixtures": [
+		{
+			"name": "marathon",
+			"file": "marathon.tr",
+			"config": {
+				"seed": 42,
+				"mode": "ranked",
+				"startLevel": 1,
+				"dasTicks": 8,
+				"arrTicks": 1
+			},
+			"bytes": 45446,
+			"sha256": "0081dc1c11fef70302a91ef278c65c283d783f0388625501a54989d84283d99a",
+			"events": 22719,
+			"expected": {
+				"status": "won",
+				"score": 15945272,
+				"lines": 1500,
+				"level": 150,
+				"durationTicks": 14607,
+				"piecesLocked": 3752,
+				"timeBonus": 1353930
+			},
+			"stateSha256": "c3d945a6578558479bf80cadeb814a8a607a3934a963fdce2a322ae7a8715350"
+		},
+		{
+			"name": "timeout",
+			"file": "timeout.tr",
+			"config": {
+				"seed": 42,
+				"mode": "ranked",
+				"startLevel": 1,
+				"dasTicks": 8,
+				"arrTicks": 1
+			},
+			"bytes": 33525,
+			"sha256": "7977b1fd31e41dfc4a627ca3c21bc73606ecdf851bc8d4fa920e770be61d4b62",
+			"events": 16424,
+			"expected": {
+				"status": "timeout",
+				"score": 462130,
+				"lines": 266,
+				"level": 27,
+				"durationTicks": 648000,
+				"piecesLocked": 668,
+				"timeBonus": 0
+			},
+			"stateSha256": "4543eba40eb4a1fd8b11d370db73ecb0fe888db0ea09e4f65940f860290b5f54"
+		},
+		{
+			"name": "adversarial",
+			"file": "adversarial.tr",
+			"config": {
+				"seed": 42,
+				"mode": "ranked",
+				"startLevel": 1,
+				"dasTicks": 8,
+				"arrTicks": 1
+			},
+			"bytes": 100677,
+			"sha256": "321e7f6d14c6f0685576417aac6b2e3f3e0b06649e9d32e193d24c08db2e3c8e",
+			"events": 50000,
+			"expected": {
+				"status": "timeout",
+				"score": 462130,
+				"lines": 266,
+				"level": 27,
+				"durationTicks": 648000,
+				"piecesLocked": 668,
+				"timeBonus": 0
+			},
+			"stateSha256": "4543eba40eb4a1fd8b11d370db73ecb0fe888db0ea09e4f65940f860290b5f54"
+		}
+	]
+}

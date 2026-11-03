@@ -1,0 +1,660 @@
+{
+  "startedAt": "2026-11-02T13:14:56.483Z",
+  "finishedAt": "2026-11-02T13:16:15.905Z",
+  "requests": [
+    {
+      "path": "/cache/explicit?ttl=f5350127-d981-4fb0-8e32-fd77ef7a857f",
+      "status": 200,
+      "clientWallTimeMs": 303.1355250000006,
+      "cache": "MISS",
+      "body": {
+        "generation": "c1e90652-4b62-45ac-8207-94222f8cca95",
+        "colo": "MXP"
+      }
+    },
+    {
+      "path": "/cache/explicit?ttl=f5350127-d981-4fb0-8e32-fd77ef7a857f",
+      "status": 200,
+      "clientWallTimeMs": 141.17413099999976,
+      "cache": "HIT",
+      "body": {
+        "generation": "c1e90652-4b62-45ac-8207-94222f8cca95",
+        "colo": "MXP"
+      }
+    },
+    {
+      "path": "/?id=confirm-kernel-worker-0",
+      "status": 200,
+      "clientWallTimeMs": 144.66422800000055,
+      "cache": null,
+      "body": {
+        "scope": "worker",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    },
+    {
+      "path": "/?id=confirm-kernel-worker-1",
+      "status": 200,
+      "clientWallTimeMs": 273.09189700000024,
+      "cache": null,
+      "body": {
+        "scope": "worker",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    },
+    {
+      "path": "/?id=confirm-kernel-worker-2",
+      "status": 200,
+      "clientWallTimeMs": 51.93823100000009,
+      "cache": null,
+      "body": {
+        "scope": "worker",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    },
+    {
+      "path": "/?id=confirm-kernel-worker-3",
+      "status": 200,
+      "clientWallTimeMs": 161.9341629999999,
+      "cache": null,
+      "body": {
+        "scope": "worker",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    },
+    {
+      "path": "/?id=confirm-kernel-worker-4",
+      "status": 200,
+      "clientWallTimeMs": 63.493146000000706,
+      "cache": null,
+      "body": {
+        "scope": "worker",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    },
+    {
+      "path": "/?id=confirm-kernel-worker-5",
+      "status": 200,
+      "clientWallTimeMs": 45.864511000000675,
+      "cache": null,
+      "body": {
+        "scope": "worker",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    },
+    {
+      "path": "/?id=confirm-kernel-worker-6",
+      "status": 200,
+      "clientWallTimeMs": 152.08777499999997,
+      "cache": null,
+      "body": {
+        "scope": "worker",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    },
+    {
+      "path": "/?id=confirm-kernel-worker-7",
+      "status": 200,
+      "clientWallTimeMs": 257.6864560000013,
+      "cache": null,
+      "body": {
+        "scope": "worker",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    },
+    {
+      "path": "/?id=confirm-kernel-worker-8",
+      "status": 200,
+      "clientWallTimeMs": 245.02680200000032,
+      "cache": null,
+      "body": {
+        "scope": "worker",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    },
+    {
+      "path": "/?id=confirm-kernel-worker-9",
+      "status": 200,
+      "clientWallTimeMs": 174.74112699999932,
+      "cache": null,
+      "body": {
+        "scope": "worker",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    },
+    {
+      "path": "/?id=confirm-kernel-worker-10",
+      "status": 200,
+      "clientWallTimeMs": 254.43062299999838,
+      "cache": null,
+      "body": {
+        "scope": "worker",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    },
+    {
+      "path": "/?id=confirm-kernel-worker-11",
+      "status": 200,
+      "clientWallTimeMs": 263.43047399999887,
+      "cache": null,
+      "body": {
+        "scope": "worker",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    },
+    {
+      "path": "/?kind=burn&iterations=200000000&id=confirm-burn-worker-0",
+      "status": 503,
+      "clientWallTimeMs": 359.2853679999989,
+      "cache": null,
+      "body": {
+        "errorPage": true
+      }
+    },
+    {
+      "path": "/?kind=burn&iterations=200000000&id=confirm-burn-worker-1",
+      "status": 503,
+      "clientWallTimeMs": 43.8882250000006,
+      "cache": null,
+      "body": {
+        "errorPage": true
+      }
+    },
+    {
+      "path": "/?kind=burn&iterations=200000000&id=confirm-burn-worker-2",
+      "status": 503,
+      "clientWallTimeMs": 50.978274999999485,
+      "cache": null,
+      "body": {
+        "errorPage": true
+      }
+    },
+    {
+      "path": "/?kind=burn&iterations=200000000&id=confirm-burn-worker-3",
+      "status": 503,
+      "clientWallTimeMs": 170.37866199999917,
+      "cache": null,
+      "body": {
+        "errorPage": true
+      }
+    },
+    {
+      "path": "/?kind=burn&iterations=200000000&id=confirm-burn-worker-4",
+      "status": 503,
+      "clientWallTimeMs": 154.33053199999995,
+      "cache": null,
+      "body": {
+        "errorPage": true
+      }
+    },
+    {
+      "path": "/?kind=burn&iterations=200000000&id=confirm-burn-worker-5",
+      "status": 503,
+      "clientWallTimeMs": 41.41257300000143,
+      "cache": null,
+      "body": {
+        "errorPage": true
+      }
+    },
+    {
+      "path": "/do?id=confirm-kernel-do-0",
+      "status": 200,
+      "clientWallTimeMs": 172.3600580000002,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    },
+    {
+      "path": "/do?id=confirm-kernel-do-1",
+      "status": 200,
+      "clientWallTimeMs": 360.76218399999925,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    },
+    {
+      "path": "/do?id=confirm-kernel-do-2",
+      "status": 200,
+      "clientWallTimeMs": 181.33700800000042,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    },
+    {
+      "path": "/do?id=confirm-kernel-do-3",
+      "status": 200,
+      "clientWallTimeMs": 337.398138999999,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    },
+    {
+      "path": "/do?id=confirm-kernel-do-4",
+      "status": 200,
+      "clientWallTimeMs": 256.41854599999897,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    },
+    {
+      "path": "/do?id=confirm-kernel-do-5",
+      "status": 200,
+      "clientWallTimeMs": 45.828623000001244,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    },
+    {
+      "path": "/do?id=confirm-kernel-do-6",
+      "status": 200,
+      "clientWallTimeMs": 51.20379700000012,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    },
+    {
+      "path": "/do?id=confirm-kernel-do-7",
+      "status": 200,
+      "clientWallTimeMs": 52.401921000000584,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    },
+    {
+      "path": "/do?id=confirm-kernel-do-8",
+      "status": 200,
+      "clientWallTimeMs": 172.93382100000053,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    },
+    {
+      "path": "/do?id=confirm-kernel-do-9",
+      "status": 200,
+      "clientWallTimeMs": 154.2165700000005,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    },
+    {
+      "path": "/do?id=confirm-kernel-do-10",
+      "status": 200,
+      "clientWallTimeMs": 53.24825500000043,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    },
+    {
+      "path": "/do?id=confirm-kernel-do-11",
+      "status": 200,
+      "clientWallTimeMs": 54.541503000000375,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    },
+    {
+      "path": "/do?kind=burn&iterations=200000000&id=confirm-burn-do-0",
+      "status": 200,
+      "clientWallTimeMs": 3434.9652989999995,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "iterations": 200000000,
+        "checksum": 405575800
+      }
+    },
+    {
+      "path": "/do?kind=burn&iterations=200000000&id=confirm-burn-do-1",
+      "status": 200,
+      "clientWallTimeMs": 4558.315855000001,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "iterations": 200000000,
+        "checksum": 405575800
+      }
+    },
+    {
+      "path": "/do?kind=burn&iterations=200000000&id=confirm-burn-do-2",
+      "status": 200,
+      "clientWallTimeMs": 4050.6675630000027,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "iterations": 200000000,
+        "checksum": 405575800
+      }
+    },
+    {
+      "path": "/do?kind=burn&iterations=200000000&id=confirm-burn-do-3",
+      "status": 200,
+      "clientWallTimeMs": 3843.196877000002,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "iterations": 200000000,
+        "checksum": 405575800
+      }
+    },
+    {
+      "path": "/do?kind=burn&iterations=200000000&id=confirm-burn-do-4",
+      "status": 200,
+      "clientWallTimeMs": 4147.513614000003,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "iterations": 200000000,
+        "checksum": 405575800
+      }
+    },
+    {
+      "path": "/do?kind=burn&iterations=200000000&id=confirm-burn-do-5",
+      "status": 200,
+      "clientWallTimeMs": 3535.8380680000046,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "iterations": 200000000,
+        "checksum": 405575800
+      }
+    },
+    {
+      "path": "/cache/explicit?ttl=f5350127-d981-4fb0-8e32-fd77ef7a857f",
+      "status": 200,
+      "clientWallTimeMs": 171.45076400000835,
+      "cache": "MISS",
+      "body": {
+        "generation": "70ba841f-b993-4b0a-8df7-ecbc884c852d",
+        "colo": "MXP"
+      }
+    }
+  ]
+}

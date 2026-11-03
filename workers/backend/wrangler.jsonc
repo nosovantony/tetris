@@ -1,0 +1,32 @@
+{
+	"$schema": "../../node_modules/wrangler/config-schema.json",
+	"name": "tetris-backend",
+	"main": "index.ts",
+	"compatibility_date": "2026-11-01",
+	"workers_dev": false,
+	"preview_urls": false,
+	"durable_objects": {
+		"bindings": [
+			{ "name": "LEADERBOARD", "class_name": "LeaderboardDO" },
+			{ "name": "VALIDATION", "class_name": "ValidationDO" }
+		]
+	},
+	"migrations": [
+		{ "tag": "v1", "new_sqlite_classes": ["LeaderboardDO"] },
+		{ "tag": "v2", "new_sqlite_classes": ["ValidationDO"] }
+	],
+	"observability": { "enabled": true },
+	"env": {
+		"staging": {
+			"name": "tetris-backend-staging",
+			"workers_dev": false,
+			"preview_urls": false,
+			"durable_objects": {
+				"bindings": [
+					{ "name": "LEADERBOARD", "class_name": "LeaderboardDO" },
+					{ "name": "VALIDATION", "class_name": "ValidationDO" }
+				]
+			}
+		}
+	}
+}

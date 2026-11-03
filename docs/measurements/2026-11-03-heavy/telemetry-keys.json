@@ -1,0 +1,14 @@
+{
+  "httpStatus": 403,
+  "body": {
+    "success": false,
+    "messages": [],
+    "errors": [
+      {
+        "code": 10104,
+        "message": "workers_observability.api.error.authentication.no_access_to_workers_observability"
+      }
+    ],
+    "result": null
+  }
+}

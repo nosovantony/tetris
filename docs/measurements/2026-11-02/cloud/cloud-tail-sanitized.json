@@ -1,0 +1,343 @@
+[
+  {
+    "eventTimestamp": 1793625098244,
+    "executionModel": "stateless",
+    "cpuTimeMs": 0,
+    "wallTimeMs": 1,
+    "outcome": "ok",
+    "truncated": false,
+    "messages": [],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625098518,
+    "executionModel": "stateless",
+    "cpuTimeMs": 0,
+    "wallTimeMs": 0,
+    "outcome": "ok",
+    "truncated": false,
+    "messages": [],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625098554,
+    "executionModel": "stateless",
+    "cpuTimeMs": 0,
+    "wallTimeMs": 0,
+    "outcome": "ok",
+    "truncated": false,
+    "messages": [],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625098626,
+    "executionModel": "stateless",
+    "cpuTimeMs": 0,
+    "wallTimeMs": 0,
+    "outcome": "ok",
+    "truncated": false,
+    "messages": [],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625098877,
+    "executionModel": "stateless",
+    "cpuTimeMs": 0,
+    "wallTimeMs": 0,
+    "outcome": "ok",
+    "truncated": false,
+    "messages": [],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625099233,
+    "executionModel": "stateless",
+    "cpuTimeMs": 0,
+    "wallTimeMs": 0,
+    "outcome": "ok",
+    "truncated": false,
+    "messages": [],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625099533,
+    "executionModel": "stateless",
+    "cpuTimeMs": 1,
+    "wallTimeMs": 20,
+    "outcome": "ok",
+    "truncated": false,
+    "messages": [],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625099603,
+    "executionModel": "stateless",
+    "cpuTimeMs": 0,
+    "wallTimeMs": 5,
+    "outcome": "ok",
+    "truncated": false,
+    "messages": [],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625099644,
+    "executionModel": "stateless",
+    "cpuTimeMs": 0,
+    "wallTimeMs": 5,
+    "outcome": "ok",
+    "truncated": false,
+    "messages": [],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625099954,
+    "executionModel": "stateless",
+    "cpuTimeMs": 0,
+    "wallTimeMs": 3,
+    "outcome": "ok",
+    "truncated": false,
+    "messages": [],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625100349,
+    "executionModel": "stateless",
+    "cpuTimeMs": 0,
+    "wallTimeMs": 4,
+    "outcome": "ok",
+    "truncated": false,
+    "messages": [],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625101181,
+    "executionModel": "stateless",
+    "cpuTimeMs": 7,
+    "wallTimeMs": 7,
+    "outcome": "ok",
+    "truncated": false,
+    "messages": [
+      {
+        "scope": "worker",
+        "id": "kernel-worker-3",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    ],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625101987,
+    "executionModel": "stateless",
+    "cpuTimeMs": 21,
+    "wallTimeMs": 24,
+    "outcome": "ok",
+    "truncated": false,
+    "messages": [
+      {
+        "scope": "worker",
+        "id": "burn-worker-1000000-2",
+        "iterations": 1000000,
+        "checksum": 2691889080
+      }
+    ],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625103111,
+    "executionModel": "stateless",
+    "cpuTimeMs": 160,
+    "wallTimeMs": 160,
+    "outcome": "ok",
+    "truncated": false,
+    "messages": [
+      {
+        "scope": "worker",
+        "id": "burn-worker-10000000-1",
+        "iterations": 10000000,
+        "checksum": 4048451832
+      }
+    ],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625104039,
+    "executionModel": "stateless",
+    "cpuTimeMs": 247,
+    "wallTimeMs": 249,
+    "outcome": "ok",
+    "truncated": false,
+    "messages": [
+      {
+        "scope": "worker",
+        "id": "burn-worker-10000000-4",
+        "iterations": 10000000,
+        "checksum": 4048451832
+      }
+    ],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625104444,
+    "executionModel": "stateless",
+    "cpuTimeMs": 1255,
+    "wallTimeMs": 1268,
+    "outcome": "exceededCpu",
+    "truncated": false,
+    "messages": [],
+    "exceptions": [
+      {
+        "name": "Error",
+        "message": "Worker exceeded CPU time limit."
+      }
+    ]
+  },
+  {
+    "eventTimestamp": 1793625105983,
+    "executionModel": "stateless",
+    "cpuTimeMs": 210,
+    "wallTimeMs": 213,
+    "outcome": "ok",
+    "truncated": false,
+    "messages": [
+      {
+        "scope": "worker",
+        "id": "burn-worker-100000000-1",
+        "iterations": 100000000,
+        "checksum": 3671656312
+      }
+    ],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625106702,
+    "executionModel": "stateless",
+    "cpuTimeMs": 1621,
+    "wallTimeMs": 1661,
+    "outcome": "exceededCpu",
+    "truncated": false,
+    "messages": [],
+    "exceptions": [
+      {
+        "name": "Error",
+        "message": "Worker exceeded CPU time limit."
+      }
+    ]
+  },
+  {
+    "eventTimestamp": 1793625108438,
+    "executionModel": "stateless",
+    "cpuTimeMs": 10,
+    "wallTimeMs": 12,
+    "outcome": "exceededCpu",
+    "truncated": false,
+    "messages": [],
+    "exceptions": [
+      {
+        "name": "Error",
+        "message": "Worker exceeded CPU time limit."
+      }
+    ]
+  },
+  {
+    "eventTimestamp": 1793625108880,
+    "executionModel": "durableObject",
+    "cpuTimeMs": 25,
+    "wallTimeMs": 33,
+    "outcome": "ok",
+    "truncated": false,
+    "messages": [
+      {
+        "scope": "do",
+        "id": "kernel-do-0",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    ],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625109055,
+    "executionModel": "stateless",
+    "cpuTimeMs": 0,
+    "wallTimeMs": 38,
+    "outcome": "canceled",
+    "truncated": false,
+    "messages": [],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625110292,
+    "executionModel": "durableObject",
+    "cpuTimeMs": 2,
+    "wallTimeMs": 2,
+    "outcome": "ok",
+    "truncated": false,
+    "messages": [
+      {
+        "scope": "do",
+        "id": "burn-do-1000000-2",
+        "iterations": 1000000,
+        "checksum": 2691889080
+      }
+    ],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625111098,
+    "executionModel": "stateless",
+    "cpuTimeMs": 0,
+    "wallTimeMs": 21,
+    "outcome": "canceled",
+    "truncated": false,
+    "messages": [],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625111765,
+    "executionModel": "durableObject",
+    "cpuTimeMs": 195,
+    "wallTimeMs": 198,
+    "outcome": "ok",
+    "truncated": false,
+    "messages": [
+      {
+        "scope": "do",
+        "id": "burn-do-100000000-0",
+        "iterations": 100000000,
+        "checksum": 3671656312
+      }
+    ],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625113146,
+    "executionModel": "stateless",
+    "cpuTimeMs": 0,
+    "wallTimeMs": 150,
+    "outcome": "canceled",
+    "truncated": false,
+    "messages": [],
+    "exceptions": []
+  }
+]

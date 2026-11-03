@@ -1,0 +1,37 @@
+{
+  "startedAt": "2026-11-02T23:55:17.910Z",
+  "base": "https://tetris-web-staging.nosov-antony.workers.dev",
+  "checks": [
+    {
+      "name": "staging web → private backend → SQLite"
+    },
+    {
+      "name": "signed random-seed run and Secure HttpOnly guest cookie"
+    },
+    {
+      "name": "guestless and forged token rejection"
+    },
+    {
+      "name": "authoritative result, ignored client scores, idempotent receipt, private profile",
+      "score": 240,
+      "lines": 0,
+      "durationTicks": 12
+    },
+    {
+      "name": "public top contains verified result, shared Cache API HIT without identity"
+    },
+    {
+      "name": "bounded payload and malformed replay rejection"
+    },
+    {
+      "name": "desktop: real signed play, IndexedDB recovery, finished outbox reload, UI submit",
+      "pageErrors": 0
+    },
+    {
+      "name": "mobile: real signed play, IndexedDB recovery, finished outbox reload, UI submit",
+      "pageErrors": 0
+    }
+  ],
+  "outcome": "passed",
+  "finishedAt": "2026-11-02T23:55:32.387Z"
+}

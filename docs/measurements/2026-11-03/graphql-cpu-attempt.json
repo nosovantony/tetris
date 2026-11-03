@@ -1,0 +1,16 @@
+{
+  "checkedAt": "2026-11-02T23:26:05.090Z",
+  "httpStatus": 401,
+  "scope": "Account-level DO CPU during bounded probe window; not per-request attribution",
+  "body": {
+    "success": false,
+    "errors": [
+      {
+        "code": 10000,
+        "message": "Authentication error"
+      }
+    ],
+    "messages": [],
+    "result": null
+  }
+}

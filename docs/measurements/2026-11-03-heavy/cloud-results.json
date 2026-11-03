@@ -1,0 +1,262 @@
+{
+  "startedAt": "2026-11-03T00:10:45.299Z",
+  "runtime": "Cloudflare Durable Object",
+  "caveat": "HTTP and application wall times are not CPU time. CPU is reported only by Cloudflare tail, if available. Synthetic bots, not human play or worst-case proof.",
+  "requests": [
+    {
+      "id": "late-20g-0",
+      "status": 200,
+      "expectedStatus": 200,
+      "wallMs": 966.263343999999,
+      "bytes": 89267,
+      "body": {
+        "runId": "0f93d7aa-ca08-4e5c-87af-bd379ab82be0",
+        "guestId": "a7725b5b-2497-421a-b913-bcb861d6782b",
+        "rulesVersion": "marathon-150-v1",
+        "playerName": "Measurement fixture",
+        "score": 14575342,
+        "lines": 1500,
+        "level": 150,
+        "durationTicks": 290484,
+        "isClear": true,
+        "expiresAt": 1793736667314
+      }
+    },
+    {
+      "id": "late-20g-1",
+      "status": 200,
+      "expectedStatus": 200,
+      "wallMs": 505.94353099999717,
+      "bytes": 89267,
+      "body": {
+        "runId": "e82e72e4-8277-45d6-9380-20c86bb5b159",
+        "guestId": "f02be58f-9580-4a05-84a3-188dff547eab",
+        "rulesVersion": "marathon-150-v1",
+        "playerName": "Measurement fixture",
+        "score": 14575342,
+        "lines": 1500,
+        "level": 150,
+        "durationTicks": 290484,
+        "isClear": true,
+        "expiresAt": 1793736668281
+      }
+    },
+    {
+      "id": "late-20g-2",
+      "status": 200,
+      "expectedStatus": 200,
+      "wallMs": 441.7737589999997,
+      "bytes": 89267,
+      "body": {
+        "runId": "21dc8ca2-a085-4f64-8ca4-9b546cfa9de0",
+        "guestId": "abb87888-05b8-4c07-8ed7-3eba4413c53f",
+        "rulesVersion": "marathon-150-v1",
+        "playerName": "Measurement fixture",
+        "score": 14575342,
+        "lines": 1500,
+        "level": 150,
+        "durationTicks": 290484,
+        "isClear": true,
+        "expiresAt": 1793736668787
+      }
+    },
+    {
+      "id": "rotate-20g-0",
+      "status": 200,
+      "expectedStatus": 200,
+      "wallMs": 466.3373939999983,
+      "bytes": 100007,
+      "body": {
+        "runId": "c093171a-36d8-4ab3-b5d5-77ea8317b547",
+        "guestId": "c6be668a-6f5f-4239-8744-6b16a9a043a3",
+        "rulesVersion": "marathon-150-v1",
+        "playerName": "Measurement fixture",
+        "score": 14575342,
+        "lines": 1500,
+        "level": 150,
+        "durationTicks": 290484,
+        "isClear": true,
+        "expiresAt": 1793736669257
+      }
+    },
+    {
+      "id": "rotate-20g-1",
+      "status": 200,
+      "expectedStatus": 200,
+      "wallMs": 392.1305620000021,
+      "bytes": 100007,
+      "body": {
+        "runId": "e8698c0e-ff0a-4593-861c-7bd77abeb3e1",
+        "guestId": "28836e51-646f-4e6b-adb7-c7009d382424",
+        "rulesVersion": "marathon-150-v1",
+        "playerName": "Measurement fixture",
+        "score": 14575342,
+        "lines": 1500,
+        "level": 150,
+        "durationTicks": 290484,
+        "isClear": true,
+        "expiresAt": 1793736669724
+      }
+    },
+    {
+      "id": "rotate-20g-2",
+      "status": 200,
+      "expectedStatus": 200,
+      "wallMs": 449.24419500000295,
+      "bytes": 100007,
+      "body": {
+        "runId": "c251e23a-3d97-4147-8054-03f5e5f473ef",
+        "guestId": "dd451c93-a5b6-48b7-bac8-8429279aec77",
+        "rulesVersion": "marathon-150-v1",
+        "playerName": "Measurement fixture",
+        "score": 14575342,
+        "lines": 1500,
+        "level": 150,
+        "durationTicks": 290484,
+        "isClear": true,
+        "expiresAt": 1793736670116
+      }
+    },
+    {
+      "id": "hold-seed7-0",
+      "status": 200,
+      "expectedStatus": 200,
+      "wallMs": 239.9682679999969,
+      "bytes": 100009,
+      "body": {
+        "runId": "26753d7a-768b-4b09-949a-df2fb21377e0",
+        "guestId": "ba43f2d3-cb7a-4640-9756-1a4edae66824",
+        "rulesVersion": "marathon-150-v1",
+        "playerName": "Measurement fixture",
+        "score": 16369552,
+        "lines": 1500,
+        "level": 150,
+        "durationTicks": 16623,
+        "isClear": true,
+        "expiresAt": 1793736670586
+      }
+    },
+    {
+      "id": "hold-seed7-1",
+      "status": 200,
+      "expectedStatus": 200,
+      "wallMs": 223.17357499999707,
+      "bytes": 100009,
+      "body": {
+        "runId": "6d268bdf-8ca9-41fd-ab26-1c4ab56fb58f",
+        "guestId": "04850142-0574-481a-b1a6-5f010e0d1785",
+        "rulesVersion": "marathon-150-v1",
+        "playerName": "Measurement fixture",
+        "score": 16369552,
+        "lines": 1500,
+        "level": 150,
+        "durationTicks": 16623,
+        "isClear": true,
+        "expiresAt": 1793736670826
+      }
+    },
+    {
+      "id": "hold-seed7-2",
+      "status": 200,
+      "expectedStatus": 200,
+      "wallMs": 230.7450749999989,
+      "bytes": 100009,
+      "body": {
+        "runId": "5917943c-709c-40bf-a404-265480b8aba0",
+        "guestId": "64b5c8d0-d9e9-415e-bd4f-8c3bc473c71f",
+        "rulesVersion": "marathon-150-v1",
+        "playerName": "Measurement fixture",
+        "score": 16369552,
+        "lines": 1500,
+        "level": 150,
+        "durationTicks": 16623,
+        "isClear": true,
+        "expiresAt": 1793736671050
+      }
+    },
+    {
+      "id": "concurrent-1",
+      "status": 200,
+      "expectedStatus": 200,
+      "wallMs": 861.9345590000012,
+      "bytes": 100007,
+      "body": {
+        "runId": "39b8bbdd-bf69-41ec-8928-b7d71d51a63d",
+        "guestId": "77813d50-16b2-4c80-8351-dcb8ef81cad4",
+        "rulesVersion": "marathon-150-v1",
+        "playerName": "Concurrent fixture",
+        "score": 14575342,
+        "lines": 1500,
+        "level": 150,
+        "durationTicks": 290484,
+        "isClear": true,
+        "expiresAt": 1793736671292
+      }
+    },
+    {
+      "id": "concurrent-2",
+      "status": 200,
+      "expectedStatus": 200,
+      "wallMs": 875.3526009999987,
+      "bytes": 100007,
+      "body": {
+        "runId": "4215fe5b-6ffb-4fe8-96ad-3a38135b0054",
+        "guestId": "12a088e8-2387-483c-a5e9-8b91a67eef88",
+        "rulesVersion": "marathon-150-v1",
+        "playerName": "Concurrent fixture",
+        "score": 14575342,
+        "lines": 1500,
+        "level": 150,
+        "durationTicks": 290484,
+        "isClear": true,
+        "expiresAt": 1793736671301
+      }
+    },
+    {
+      "id": "concurrent-0",
+      "status": 200,
+      "expectedStatus": 200,
+      "wallMs": 1044.7157869999974,
+      "bytes": 100007,
+      "body": {
+        "runId": "8c6d1825-4b9c-4ff2-8abf-edef568810fa",
+        "guestId": "8f61dc08-51b7-4167-84aa-b7a1a1e293dd",
+        "rulesVersion": "marathon-150-v1",
+        "playerName": "Concurrent fixture",
+        "score": 14575342,
+        "lines": 1500,
+        "level": 150,
+        "durationTicks": 290484,
+        "isClear": true,
+        "expiresAt": 1793736671282
+      }
+    }
+  ],
+  "cleanup": {
+    "workerDeleted": true,
+    "durableObjectClassDeletedViaMigration": true
+  },
+  "fixtureManifestSha256": "aa0b2a0488e9922ab2dd743791c644b1e33a786a02c5570edb756b320036d99e",
+  "sources": {
+    "src/lib/game/bag.ts": "e64089bdfea6cc11ffb7dcd964cf12a59d8ca5beb1b00d7405410848598849e1",
+    "src/lib/game/board.ts": "782bbb89464219569d1959bd1fe4611f53ebeb4f1fc7e287693ef5c9491bf8ba",
+    "src/lib/game/checkpoint.ts": "3f533c16bdada0ad074162440d827e72807b4bcd7a7174fe9477a18f2fa3d64a",
+    "src/lib/game/codec.ts": "6209d72d921ef23d9f0c64488fb0d4ed72843440aa0a650a55307a142e4e040d",
+    "src/lib/game/constants.ts": "f3ffca1fdadb68ee00b6259bb2fda6dc19f5aa9401e0772d394f20d82a044694",
+    "src/lib/game/engine.ts": "330f9827d08532401bdd4ab92252d57d881eb095f234e8f929640a5aefb4ea01",
+    "src/lib/game/index.ts": "c9270ceb9e6c6a0ba6ef9199883e4d6b84eeb73dea72c45db7ba04972b1b6ca7",
+    "src/lib/game/levels.ts": "b637aa00df319c33ae0e068684592c234e05aa31ad931740d8da92141f3eb8c8",
+    "src/lib/game/random.ts": "e9111faa36b0e680aae907bd44b571e05f568960324861d1a06d942215bd9a19",
+    "src/lib/game/scoring.ts": "0aea2a67eae29ad6c0e7cdecbddff380bfb4bc5daf519bc60138da0c993c1560",
+    "src/lib/game/session.ts": "39fb1c79b6ebf05b144aa29bd7e46d85b4a63ec447b4ae341a3707253556f540",
+    "src/lib/game/simulator.ts": "69e50556eabfcf164e7a759e8b25fbfc45a3e93e9a88995ff86820f6772d9342",
+    "src/lib/game/srs.ts": "8842c7c399aa83458969af8295c9de1cb222a8e5d53f2c74ba421cc48d09030c",
+    "src/lib/game/types.ts": "fc1e785d864ecb61ac24a979e2b64c636416bbfb09489fedee2002ba824a43ed",
+    "src/lib/shared/runs.ts": "a25e4a7557c6c5cb3c878a36d95341de37c9e9ce9957c9275951f9ab009dd0c9",
+    "src/lib/shared/leaderboard.ts": "34ef29bb642f3fd6a160c76708de595535fbde826ba3b3310409e300c7b481a5",
+    "src/lib/server/http.ts": "87ce01d1c5e1321c8ee9d8b2016ea26741859e80157c2d1072c9d5dbdbd66663",
+    "workers/backend/validation.ts": "7d6a9d3c6740a050160768c80ff2154be3f8f9554ac1dba029ccd08b522d736f"
+  },
+  "finishedAt": "2026-11-03T00:11:29.580Z",
+  "cpuTelemetry": "Cloudflare tail supplied no CPU fields. HTTP success and wall times do not establish CPU cost or worst-case headroom."
+}

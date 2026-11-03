@@ -1,0 +1,708 @@
+{
+  "startedAt": "2026-11-02T13:11:31.795Z",
+  "finishedAt": "2026-11-02T13:11:53.456Z",
+  "cache": {
+    "header": [
+      {
+        "path": "/cache/header?key=5eeb2b05-07f4-4a9b-b06b-bb6dc97dc09e",
+        "status": 200,
+        "clientWallTimeMs": 709.2153949999993,
+        "cache": "MISS",
+        "body": {
+          "generation": "1e1057c6-7a23-4538-954c-6a43d2d46fb8",
+          "colo": "MXP"
+        }
+      },
+      {
+        "path": "/cache/header?key=5eeb2b05-07f4-4a9b-b06b-bb6dc97dc09e",
+        "status": 200,
+        "clientWallTimeMs": 23.64706600000045,
+        "cache": "MISS",
+        "body": {
+          "generation": "e6ed53e2-6c19-4cf1-8c8f-bc6d8bca5b2e",
+          "colo": "MXP"
+        }
+      },
+      {
+        "path": "/cache/header?key=5eeb2b05-07f4-4a9b-b06b-bb6dc97dc09e",
+        "status": 200,
+        "clientWallTimeMs": 65.48496400000022,
+        "cache": "MISS",
+        "body": {
+          "generation": "36c57bb9-1470-4cee-8d2c-a94b10bec5f5",
+          "colo": "MXP"
+        }
+      },
+      {
+        "path": "/cache/header?key=5eeb2b05-07f4-4a9b-b06b-bb6dc97dc09e",
+        "status": 200,
+        "clientWallTimeMs": 259.0381090000001,
+        "cache": "MISS",
+        "body": {
+          "generation": "c3b11548-ed3b-4c47-a522-7f18c04b627a",
+          "colo": "MXP"
+        }
+      },
+      {
+        "path": "/cache/header?key=5eeb2b05-07f4-4a9b-b06b-bb6dc97dc09e",
+        "status": 200,
+        "clientWallTimeMs": 354.50220100000024,
+        "cache": "MISS",
+        "body": {
+          "generation": "10da88c0-cdd3-4ae6-af77-8cf4e48ecdc4",
+          "colo": "MXP"
+        }
+      },
+      {
+        "path": "/cache/header?key=5eeb2b05-07f4-4a9b-b06b-bb6dc97dc09e",
+        "status": 200,
+        "clientWallTimeMs": 310.17784200000006,
+        "cache": "MISS",
+        "body": {
+          "generation": "385ddc67-db87-4c42-96bf-3bbe00b2478c",
+          "colo": "MXP"
+        }
+      }
+    ],
+    "explicit": [
+      {
+        "path": "/cache/explicit?key=6b6654b7-d3a4-44d7-b8b2-37d1e90aba82",
+        "status": 200,
+        "clientWallTimeMs": 59.39183300000059,
+        "cache": "MISS",
+        "body": {
+          "generation": "6a646e7e-c233-4b7d-873e-b8436842dbad",
+          "colo": "MXP"
+        }
+      },
+      {
+        "path": "/cache/explicit?key=6b6654b7-d3a4-44d7-b8b2-37d1e90aba82",
+        "status": 200,
+        "clientWallTimeMs": 40.58694800000012,
+        "cache": "HIT",
+        "body": {
+          "generation": "6a646e7e-c233-4b7d-873e-b8436842dbad",
+          "colo": "MXP"
+        }
+      },
+      {
+        "path": "/cache/explicit?key=6b6654b7-d3a4-44d7-b8b2-37d1e90aba82",
+        "status": 200,
+        "clientWallTimeMs": 309.59046600000056,
+        "cache": "HIT",
+        "body": {
+          "generation": "6a646e7e-c233-4b7d-873e-b8436842dbad",
+          "colo": "MXP"
+        }
+      },
+      {
+        "path": "/cache/explicit?key=6b6654b7-d3a4-44d7-b8b2-37d1e90aba82",
+        "status": 200,
+        "clientWallTimeMs": 408.4977250000002,
+        "cache": "HIT",
+        "body": {
+          "generation": "6a646e7e-c233-4b7d-873e-b8436842dbad",
+          "colo": "MXP"
+        }
+      },
+      {
+        "path": "/cache/explicit?key=6b6654b7-d3a4-44d7-b8b2-37d1e90aba82",
+        "status": 200,
+        "clientWallTimeMs": 100.17427099999986,
+        "cache": "HIT",
+        "body": {
+          "generation": "6a646e7e-c233-4b7d-873e-b8436842dbad",
+          "colo": "MXP"
+        }
+      },
+      {
+        "path": "/cache/explicit?key=6b6654b7-d3a4-44d7-b8b2-37d1e90aba82",
+        "status": 200,
+        "clientWallTimeMs": 105.69560099999944,
+        "cache": "HIT",
+        "body": {
+          "generation": "6a646e7e-c233-4b7d-873e-b8436842dbad",
+          "colo": "MXP"
+        }
+      }
+    ]
+  },
+  "compute": [
+    {
+      "path": "/?id=kernel-worker-0",
+      "status": 200,
+      "clientWallTimeMs": 203.6210140000003,
+      "cache": null,
+      "body": {
+        "scope": "worker",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    },
+    {
+      "path": "/?id=kernel-worker-1",
+      "status": 200,
+      "clientWallTimeMs": 100.83602900000005,
+      "cache": null,
+      "body": {
+        "scope": "worker",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    },
+    {
+      "path": "/?id=kernel-worker-2",
+      "status": 200,
+      "clientWallTimeMs": 306.24591900000087,
+      "cache": null,
+      "body": {
+        "scope": "worker",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    },
+    {
+      "path": "/?id=kernel-worker-3",
+      "status": 200,
+      "clientWallTimeMs": 102.06127600000036,
+      "cache": null,
+      "body": {
+        "scope": "worker",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    },
+    {
+      "path": "/?id=kernel-worker-4",
+      "status": 200,
+      "clientWallTimeMs": 308.8757000000005,
+      "cache": null,
+      "body": {
+        "scope": "worker",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    },
+    {
+      "path": "/?id=kernel-worker-5",
+      "status": 200,
+      "clientWallTimeMs": 26.917511999999988,
+      "cache": null,
+      "body": {
+        "scope": "worker",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    },
+    {
+      "path": "/?kind=burn&iterations=1000000&id=burn-worker-1000000-0",
+      "status": 200,
+      "clientWallTimeMs": 74.91586800000005,
+      "cache": null,
+      "body": {
+        "scope": "worker",
+        "iterations": 1000000,
+        "checksum": 2691889080
+      }
+    },
+    {
+      "path": "/?kind=burn&iterations=1000000&id=burn-worker-1000000-1",
+      "status": 200,
+      "clientWallTimeMs": 308.30941600000006,
+      "cache": null,
+      "body": {
+        "scope": "worker",
+        "iterations": 1000000,
+        "checksum": 2691889080
+      }
+    },
+    {
+      "path": "/?kind=burn&iterations=1000000&id=burn-worker-1000000-2",
+      "status": 200,
+      "clientWallTimeMs": 407.8356910000002,
+      "cache": null,
+      "body": {
+        "scope": "worker",
+        "iterations": 1000000,
+        "checksum": 2691889080
+      }
+    },
+    {
+      "path": "/?kind=burn&iterations=1000000&id=burn-worker-1000000-3",
+      "status": 200,
+      "clientWallTimeMs": 205.33641699999862,
+      "cache": null,
+      "body": {
+        "scope": "worker",
+        "iterations": 1000000,
+        "checksum": 2691889080
+      }
+    },
+    {
+      "path": "/?kind=burn&iterations=1000000&id=burn-worker-1000000-4",
+      "status": 200,
+      "clientWallTimeMs": 104.05758599999899,
+      "cache": null,
+      "body": {
+        "scope": "worker",
+        "iterations": 1000000,
+        "checksum": 2691889080
+      }
+    },
+    {
+      "path": "/?kind=burn&iterations=10000000&id=burn-worker-10000000-0",
+      "status": 200,
+      "clientWallTimeMs": 407.11826800000017,
+      "cache": null,
+      "body": {
+        "scope": "worker",
+        "iterations": 10000000,
+        "checksum": 4048451832
+      }
+    },
+    {
+      "path": "/?kind=burn&iterations=10000000&id=burn-worker-10000000-1",
+      "status": 200,
+      "clientWallTimeMs": 308.96028000000115,
+      "cache": null,
+      "body": {
+        "scope": "worker",
+        "iterations": 10000000,
+        "checksum": 4048451832
+      }
+    },
+    {
+      "path": "/?kind=burn&iterations=10000000&id=burn-worker-10000000-2",
+      "status": 200,
+      "clientWallTimeMs": 203.82104400000026,
+      "cache": null,
+      "body": {
+        "scope": "worker",
+        "iterations": 10000000,
+        "checksum": 4048451832
+      }
+    },
+    {
+      "path": "/?kind=burn&iterations=10000000&id=burn-worker-10000000-3",
+      "status": 200,
+      "clientWallTimeMs": 413.9948229999991,
+      "cache": null,
+      "body": {
+        "scope": "worker",
+        "iterations": 10000000,
+        "checksum": 4048451832
+      }
+    },
+    {
+      "path": "/?kind=burn&iterations=10000000&id=burn-worker-10000000-4",
+      "status": 200,
+      "clientWallTimeMs": 405.0352179999991,
+      "cache": null,
+      "body": {
+        "scope": "worker",
+        "iterations": 10000000,
+        "checksum": 4048451832
+      }
+    },
+    {
+      "path": "/?kind=burn&iterations=100000000&id=burn-worker-100000000-0",
+      "status": 503,
+      "clientWallTimeMs": 1537.2559760000004,
+      "cache": null,
+      "body": {
+        "errorPage": true
+      }
+    },
+    {
+      "path": "/?kind=burn&iterations=100000000&id=burn-worker-100000000-1",
+      "status": 200,
+      "clientWallTimeMs": 412.24596999999994,
+      "cache": null,
+      "body": {
+        "scope": "worker",
+        "iterations": 100000000,
+        "checksum": 3671656312
+      }
+    },
+    {
+      "path": "/?kind=burn&iterations=100000000&id=burn-worker-100000000-2",
+      "status": 200,
+      "clientWallTimeMs": 309.18496699999923,
+      "cache": null,
+      "body": {
+        "scope": "worker",
+        "iterations": 100000000,
+        "checksum": 3671656312
+      }
+    },
+    {
+      "path": "/?kind=burn&iterations=100000000&id=burn-worker-100000000-3",
+      "status": 503,
+      "clientWallTimeMs": 1735.5681349999995,
+      "cache": null,
+      "body": {
+        "errorPage": true
+      }
+    },
+    {
+      "path": "/?kind=burn&iterations=100000000&id=burn-worker-100000000-4",
+      "status": 503,
+      "clientWallTimeMs": 39.97973800000182,
+      "cache": null,
+      "body": {
+        "errorPage": true
+      }
+    },
+    {
+      "path": "/do?id=kernel-do-0",
+      "status": 200,
+      "clientWallTimeMs": 577.7039960000002,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    },
+    {
+      "path": "/do?id=kernel-do-1",
+      "status": 200,
+      "clientWallTimeMs": 97.76729100000011,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    },
+    {
+      "path": "/do?id=kernel-do-2",
+      "status": 200,
+      "clientWallTimeMs": 306.41194200000245,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    },
+    {
+      "path": "/do?id=kernel-do-3",
+      "status": 200,
+      "clientWallTimeMs": 114.46502900000269,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    },
+    {
+      "path": "/do?id=kernel-do-4",
+      "status": 200,
+      "clientWallTimeMs": 90.01156099999935,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    },
+    {
+      "path": "/do?id=kernel-do-5",
+      "status": 200,
+      "clientWallTimeMs": 106.09601100000145,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    },
+    {
+      "path": "/do?kind=burn&iterations=1000000&id=burn-do-1000000-0",
+      "status": 200,
+      "clientWallTimeMs": 204.13212600000043,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "iterations": 1000000,
+        "checksum": 2691889080
+      }
+    },
+    {
+      "path": "/do?kind=burn&iterations=1000000&id=burn-do-1000000-1",
+      "status": 200,
+      "clientWallTimeMs": 350.9311659999985,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "iterations": 1000000,
+        "checksum": 2691889080
+      }
+    },
+    {
+      "path": "/do?kind=burn&iterations=1000000&id=burn-do-1000000-2",
+      "status": 200,
+      "clientWallTimeMs": 35.47692200000165,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "iterations": 1000000,
+        "checksum": 2691889080
+      }
+    },
+    {
+      "path": "/do?kind=burn&iterations=1000000&id=burn-do-1000000-3",
+      "status": 200,
+      "clientWallTimeMs": 333.3938510000007,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "iterations": 1000000,
+        "checksum": 2691889080
+      }
+    },
+    {
+      "path": "/do?kind=burn&iterations=1000000&id=burn-do-1000000-4",
+      "status": 200,
+      "clientWallTimeMs": 99.07369599999947,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "iterations": 1000000,
+        "checksum": 2691889080
+      }
+    },
+    {
+      "path": "/do?kind=burn&iterations=10000000&id=burn-do-10000000-0",
+      "status": 200,
+      "clientWallTimeMs": 304.6206229999989,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "iterations": 10000000,
+        "checksum": 4048451832
+      }
+    },
+    {
+      "path": "/do?kind=burn&iterations=10000000&id=burn-do-10000000-1",
+      "status": 200,
+      "clientWallTimeMs": 312.97329799999716,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "iterations": 10000000,
+        "checksum": 4048451832
+      }
+    },
+    {
+      "path": "/do?kind=burn&iterations=10000000&id=burn-do-10000000-2",
+      "status": 200,
+      "clientWallTimeMs": 210.9813729999987,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "iterations": 10000000,
+        "checksum": 4048451832
+      }
+    },
+    {
+      "path": "/do?kind=burn&iterations=10000000&id=burn-do-10000000-3",
+      "status": 200,
+      "clientWallTimeMs": 90.72325600000113,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "iterations": 10000000,
+        "checksum": 4048451832
+      }
+    },
+    {
+      "path": "/do?kind=burn&iterations=10000000&id=burn-do-10000000-4",
+      "status": 200,
+      "clientWallTimeMs": 105.2512659999993,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "iterations": 10000000,
+        "checksum": 4048451832
+      }
+    },
+    {
+      "path": "/do?kind=burn&iterations=100000000&id=burn-do-100000000-0",
+      "status": 200,
+      "clientWallTimeMs": 234.91297900000063,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "iterations": 100000000,
+        "checksum": 3671656312
+      }
+    },
+    {
+      "path": "/do?kind=burn&iterations=100000000&id=burn-do-100000000-1",
+      "status": 200,
+      "clientWallTimeMs": 376.6499040000017,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "iterations": 100000000,
+        "checksum": 3671656312
+      }
+    },
+    {
+      "path": "/do?kind=burn&iterations=100000000&id=burn-do-100000000-2",
+      "status": 200,
+      "clientWallTimeMs": 309.6900740000019,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "iterations": 100000000,
+        "checksum": 3671656312
+      }
+    },
+    {
+      "path": "/do?kind=burn&iterations=100000000&id=burn-do-100000000-3",
+      "status": 200,
+      "clientWallTimeMs": 406.3586729999988,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "iterations": 100000000,
+        "checksum": 3671656312
+      }
+    },
+    {
+      "path": "/do?kind=burn&iterations=100000000&id=burn-do-100000000-4",
+      "status": 200,
+      "clientWallTimeMs": 312.9396369999995,
+      "cache": null,
+      "body": {
+        "scope": "do",
+        "iterations": 100000000,
+        "checksum": 3671656312
+      }
+    }
+  ]
+}

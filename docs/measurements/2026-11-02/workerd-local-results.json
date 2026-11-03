@@ -1,0 +1,202 @@
+{
+  "timestamp": "2026-11-02T13:00:18.097Z",
+  "runtime": "local workerd via Wrangler 4.156.1",
+  "limitations": "No production CPU enforcement; local cache is not workers.dev/CDN. Local SQL counters measure the exact queries here, not overall billing.",
+  "sql": {
+    "status": 200,
+    "body": {
+      "cleanupResult": {
+        "rowsRead": 1000,
+        "rowsWritten": 500
+      },
+      "emptyUnindexedResult": {
+        "rowsRead": 500,
+        "rowsWritten": 0
+      },
+      "emptyCleanupResult": {
+        "rowsRead": 1,
+        "rowsWritten": 0
+      },
+      "strftime": [
+        {
+          "seconds": "1793624417"
+        }
+      ],
+      "rank": {
+        "value": [
+          {
+            "ahead": 4999
+          }
+        ],
+        "rowsRead": 5000
+      },
+      "top": {
+        "count": 100,
+        "rowsRead": 100
+      },
+      "lookup": {
+        "value": [
+          {
+            "id": 5000,
+            "score": 5000
+          }
+        ],
+        "rowsRead": 1
+      }
+    },
+    "wallMs": 382.60656900000026,
+    "cache": null
+  },
+  "cache": {
+    "header": [
+      {
+        "status": 200,
+        "body": {
+          "generation": "4949f915-997d-41ec-bfe7-cf0ce88ca4da",
+          "colo": "MXP"
+        },
+        "wallMs": 5.5165930000002845,
+        "cache": "MISS"
+      },
+      {
+        "status": 200,
+        "body": {
+          "generation": "cd4648f6-17aa-4c9a-8bbd-2858ca3c3f0e",
+          "colo": "MXP"
+        },
+        "wallMs": 4.402756000000409,
+        "cache": "MISS"
+      },
+      {
+        "status": 200,
+        "body": {
+          "generation": "408990c0-0a2b-4354-98f9-c4f6e68ea9fe",
+          "colo": "MXP"
+        },
+        "wallMs": 4.013108999999986,
+        "cache": "MISS"
+      },
+      {
+        "status": 200,
+        "body": {
+          "generation": "9db1f80f-67ee-41f4-abfd-d6ea58a487f4",
+          "colo": "MXP"
+        },
+        "wallMs": 3.8999650000000656,
+        "cache": "MISS"
+      },
+      {
+        "status": 200,
+        "body": {
+          "generation": "306c2e6e-e062-4402-ab17-a5d54670d525",
+          "colo": "MXP"
+        },
+        "wallMs": 3.7501539999998386,
+        "cache": "MISS"
+      }
+    ],
+    "explicit": [
+      {
+        "status": 200,
+        "body": {
+          "generation": "692bcb56-e456-4277-8df9-a793cb133b4d",
+          "colo": "MXP"
+        },
+        "wallMs": 9.754243999999744,
+        "cache": "MISS"
+      },
+      {
+        "status": 200,
+        "body": {
+          "generation": "692bcb56-e456-4277-8df9-a793cb133b4d",
+          "colo": "MXP"
+        },
+        "wallMs": 4.525888000000123,
+        "cache": "HIT"
+      },
+      {
+        "status": 200,
+        "body": {
+          "generation": "692bcb56-e456-4277-8df9-a793cb133b4d",
+          "colo": "MXP"
+        },
+        "wallMs": 4.249663000000055,
+        "cache": "HIT"
+      },
+      {
+        "status": 200,
+        "body": {
+          "generation": "692bcb56-e456-4277-8df9-a793cb133b4d",
+          "colo": "MXP"
+        },
+        "wallMs": 4.150208999999904,
+        "cache": "HIT"
+      },
+      {
+        "status": 200,
+        "body": {
+          "generation": "692bcb56-e456-4277-8df9-a793cb133b4d",
+          "colo": "MXP"
+        },
+        "wallMs": 3.802955000000111,
+        "cache": "HIT"
+      }
+    ]
+  },
+  "timings": {
+    "/": {
+      "first": {
+        "status": 200,
+        "body": {
+          "scope": "worker",
+          "board": {
+            "hash": 1681217317,
+            "lines": 1500
+          },
+          "timer": {
+            "hash": 3972466708,
+            "gravityCount": 3600,
+            "dasCount": 0,
+            "lockCount": 7200,
+            "iterations": 36301
+          },
+          "events": 30000
+        },
+        "wallMs": 14.509560999999849,
+        "cache": null
+      },
+      "unit": "localhost HTTP roundtrip ms, NOT Cloudflare CPU",
+      "n": 30,
+      "median": 7.988084000000072,
+      "p95": 11.015724999999748,
+      "max": 12.347608000000037
+    },
+    "/do": {
+      "first": {
+        "status": 200,
+        "body": {
+          "scope": "do",
+          "board": {
+            "hash": 1681217317,
+            "lines": 1500
+          },
+          "timer": {
+            "hash": 3972466708,
+            "gravityCount": 3600,
+            "dasCount": 0,
+            "lockCount": 7200,
+            "iterations": 36301
+          },
+          "events": 30000
+        },
+        "wallMs": 7.439687000000049,
+        "cache": null
+      },
+      "unit": "localhost HTTP roundtrip ms, NOT Cloudflare CPU",
+      "n": 30,
+      "median": 6.1791119999998045,
+      "p95": 6.907561999999871,
+      "max": 7.22031300000026
+    }
+  }
+}

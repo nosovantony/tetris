@@ -1,0 +1,2 @@
+# Local development only. Copy to .dev.vars next to this file, do not commit real secrets.
+RUN_SIGNING_KEY="local-development-only-replace-in-production-32-bytes-minimum"

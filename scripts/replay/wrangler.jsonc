@@ -1,0 +1,11 @@
+{
+	"$schema": "../../node_modules/wrangler/config-schema.json",
+	"name": "tetris-replay-measure-20261103",
+	"main": "probe.ts",
+	"compatibility_date": "2026-11-01",
+	"workers_dev": true,
+	"preview_urls": false,
+	"durable_objects": { "bindings": [{ "name": "PROBE", "class_name": "ReplayProbe" }] },
+	"migrations": [{ "tag": "v1", "new_sqlite_classes": ["ReplayProbe"] }],
+	"observability": { "enabled": true }
+}

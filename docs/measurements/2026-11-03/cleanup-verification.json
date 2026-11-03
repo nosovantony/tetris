@@ -1,0 +1,9 @@
+{
+  "checkedAt": "2026-11-02T23:23:30.885Z",
+  "remainingProbeWorkers": [],
+  "remainingProbeNamespaces": [],
+  "productionWorkers": [
+    "tetris-backend",
+    "tetris-web"
+  ]
+}

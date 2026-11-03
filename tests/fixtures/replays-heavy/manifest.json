@@ -1,0 +1,93 @@
+{
+	"version": 1,
+	"rulesVersion": "marathon-150-v1",
+	"fixtures": [
+		{
+			"name": "late-20g",
+			"file": "late-20g.tr",
+			"config": {
+				"seed": 42,
+				"mode": "ranked",
+				"startLevel": 1,
+				"dasTicks": 8,
+				"arrTicks": 1
+			},
+			"bytes": 89267,
+			"sha256": "608202dc384b03b81f65aa7b135daca5b19f2c372a933ef2412f25a17fa7a86a",
+			"events": 44629,
+			"metrics": {
+				"holds": 0
+			},
+			"expected": {
+				"status": "won",
+				"score": 14575342,
+				"lines": 1500,
+				"level": 150,
+				"durationTicks": 290484,
+				"piecesLocked": 3752,
+				"timeBonus": 0
+			},
+			"stateSha256": "d4e6ed556dfafe4d7ddd890e157dabefb696ff772801baaaddac0dc79e4dd9b8"
+		},
+		{
+			"name": "rotate-20g",
+			"file": "rotate-20g.tr",
+			"config": {
+				"seed": 42,
+				"mode": "ranked",
+				"startLevel": 1,
+				"dasTicks": 8,
+				"arrTicks": 1
+			},
+			"bytes": 100007,
+			"sha256": "b3928cb78739e7da0bee737ee77b70126916ff77e879f40cb15cf6b569dc088a",
+			"events": 49999,
+			"metrics": {
+				"added": 5370,
+				"rotationAttempts": 5370,
+				"highGravityRotations": 5370,
+				"holds": 0
+			},
+			"expected": {
+				"status": "won",
+				"score": 14575342,
+				"lines": 1500,
+				"level": 150,
+				"durationTicks": 290484,
+				"piecesLocked": 3752,
+				"timeBonus": 0
+			},
+			"stateSha256": "d4e6ed556dfafe4d7ddd890e157dabefb696ff772801baaaddac0dc79e4dd9b8"
+		},
+		{
+			"name": "hold-seed7",
+			"file": "hold-seed7.tr",
+			"config": {
+				"seed": 7,
+				"mode": "ranked",
+				"startLevel": 1,
+				"dasTicks": 8,
+				"arrTicks": 1
+			},
+			"bytes": 100009,
+			"sha256": "ccfdc1d45d15e0dd204f4b27a0e97cb28791772453b20c6d24585d187a1a2eb9",
+			"events": 50000,
+			"metrics": {
+				"added": 25312,
+				"rotationAttempts": 25312,
+				"highGravityRotations": 0,
+				"holds": 1876
+			},
+			"expected": {
+				"status": "won",
+				"score": 16369552,
+				"lines": 1500,
+				"level": 150,
+				"durationTicks": 16623,
+				"piecesLocked": 3752,
+				"timeBonus": 1333770
+			},
+			"stateSha256": "bd5d3dc714008dc48174bd3c89baccaa2ff6cf81fd4867dccd542ef7a4e54480"
+		}
+	]
+}

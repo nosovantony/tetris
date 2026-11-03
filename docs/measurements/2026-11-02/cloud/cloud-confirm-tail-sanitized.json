@@ -1,0 +1,446 @@
+[
+  {
+    "eventTimestamp": 1793625305332,
+    "executionModel": "stateless",
+    "cpuTimeMs": 7,
+    "wallTimeMs": 7,
+    "outcome": "ok",
+    "truncated": false,
+    "messages": [
+      {
+        "scope": "worker",
+        "id": "confirm-kernel-worker-8",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    ],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625305713,
+    "executionModel": "stateless",
+    "cpuTimeMs": 10,
+    "wallTimeMs": 13,
+    "outcome": "ok",
+    "truncated": false,
+    "messages": [
+      {
+        "scope": "worker",
+        "id": "confirm-kernel-worker-9",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    ],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625306021,
+    "executionModel": "stateless",
+    "cpuTimeMs": 5,
+    "wallTimeMs": 6,
+    "outcome": "ok",
+    "truncated": false,
+    "messages": [
+      {
+        "scope": "worker",
+        "id": "confirm-kernel-worker-10",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    ],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625306434,
+    "executionModel": "stateless",
+    "cpuTimeMs": 4,
+    "wallTimeMs": 4,
+    "outcome": "ok",
+    "truncated": false,
+    "messages": [
+      {
+        "scope": "worker",
+        "id": "confirm-kernel-worker-11",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    ],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625306855,
+    "executionModel": "stateless",
+    "cpuTimeMs": 222,
+    "wallTimeMs": 227,
+    "outcome": "exceededCpu",
+    "truncated": false,
+    "messages": [],
+    "exceptions": [
+      {
+        "name": "Error",
+        "message": "Worker exceeded CPU time limit."
+      }
+    ]
+  },
+  {
+    "eventTimestamp": 1793625307349,
+    "executionModel": "stateless",
+    "cpuTimeMs": 10,
+    "wallTimeMs": 14,
+    "outcome": "exceededCpu",
+    "truncated": false,
+    "messages": [],
+    "exceptions": [
+      {
+        "name": "Error",
+        "message": "Worker exceeded CPU time limit."
+      }
+    ]
+  },
+  {
+    "eventTimestamp": 1793625307543,
+    "executionModel": "stateless",
+    "cpuTimeMs": 10,
+    "wallTimeMs": 12,
+    "outcome": "exceededCpu",
+    "truncated": false,
+    "messages": [],
+    "exceptions": [
+      {
+        "name": "Error",
+        "message": "Worker exceeded CPU time limit."
+      }
+    ]
+  },
+  {
+    "eventTimestamp": 1793625307747,
+    "executionModel": "stateless",
+    "cpuTimeMs": 10,
+    "wallTimeMs": 13,
+    "outcome": "exceededCpu",
+    "truncated": false,
+    "messages": [],
+    "exceptions": [
+      {
+        "name": "Error",
+        "message": "Worker exceeded CPU time limit."
+      }
+    ]
+  },
+  {
+    "eventTimestamp": 1793625308107,
+    "executionModel": "stateless",
+    "cpuTimeMs": 10,
+    "wallTimeMs": 13,
+    "outcome": "exceededCpu",
+    "truncated": false,
+    "messages": [],
+    "exceptions": [
+      {
+        "name": "Error",
+        "message": "Worker exceeded CPU time limit."
+      }
+    ]
+  },
+  {
+    "eventTimestamp": 1793625308371,
+    "executionModel": "stateless",
+    "cpuTimeMs": 10,
+    "wallTimeMs": 12,
+    "outcome": "exceededCpu",
+    "truncated": false,
+    "messages": [],
+    "exceptions": [
+      {
+        "name": "Error",
+        "message": "Worker exceeded CPU time limit."
+      }
+    ]
+  },
+  {
+    "eventTimestamp": 1793625308562,
+    "executionModel": "stateless",
+    "cpuTimeMs": 0,
+    "wallTimeMs": 83,
+    "outcome": "canceled",
+    "truncated": false,
+    "messages": [],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625308573,
+    "executionModel": "durableObject",
+    "cpuTimeMs": 27,
+    "wallTimeMs": 70,
+    "outcome": "ok",
+    "truncated": false,
+    "messages": [
+      {
+        "scope": "do",
+        "id": "confirm-kernel-do-0",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    ],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625311021,
+    "executionModel": "stateless",
+    "cpuTimeMs": 1,
+    "wallTimeMs": 24,
+    "outcome": "canceled",
+    "truncated": false,
+    "messages": [],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625311840,
+    "executionModel": "durableObject",
+    "cpuTimeMs": 4,
+    "wallTimeMs": 14,
+    "outcome": "ok",
+    "truncated": false,
+    "messages": [
+      {
+        "scope": "do",
+        "id": "confirm-kernel-do-11",
+        "board": {
+          "hash": 1681217317,
+          "lines": 1500
+        },
+        "timer": {
+          "hash": 3972466708,
+          "gravityCount": 3600,
+          "dasCount": 0,
+          "lockCount": 7200,
+          "iterations": 36301
+        },
+        "events": 30000
+      }
+    ],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625312041,
+    "executionModel": "durableObject",
+    "cpuTimeMs": 3241,
+    "wallTimeMs": 3352,
+    "outcome": "ok",
+    "truncated": false,
+    "messages": [
+      {
+        "scope": "do",
+        "id": "confirm-burn-do-0",
+        "iterations": 200000000,
+        "checksum": 405575800
+      }
+    ],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625312261,
+    "executionModel": "stateless",
+    "cpuTimeMs": 0,
+    "wallTimeMs": 3361,
+    "outcome": "canceled",
+    "truncated": false,
+    "messages": [],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625312248,
+    "executionModel": "durableObject",
+    "cpuTimeMs": 3270,
+    "wallTimeMs": 3420,
+    "outcome": "ok",
+    "truncated": false,
+    "messages": [
+      {
+        "scope": "do",
+        "id": "confirm-burn-do-1",
+        "iterations": 200000000,
+        "checksum": 405575800
+      }
+    ],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625316613,
+    "executionModel": "stateless",
+    "cpuTimeMs": 1,
+    "wallTimeMs": 3432,
+    "outcome": "canceled",
+    "truncated": false,
+    "messages": [],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625320557,
+    "executionModel": "stateless",
+    "cpuTimeMs": 0,
+    "wallTimeMs": 3942,
+    "outcome": "canceled",
+    "truncated": false,
+    "messages": [],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625315551,
+    "executionModel": "durableObject",
+    "cpuTimeMs": 3732,
+    "wallTimeMs": 3931,
+    "outcome": "ok",
+    "truncated": false,
+    "messages": [
+      {
+        "scope": "do",
+        "id": "confirm-burn-do-2",
+        "iterations": 200000000,
+        "checksum": 405575800
+      }
+    ],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625324767,
+    "executionModel": "stateless",
+    "cpuTimeMs": 0,
+    "wallTimeMs": 3499,
+    "outcome": "canceled",
+    "truncated": false,
+    "messages": [],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625320496,
+    "executionModel": "durableObject",
+    "cpuTimeMs": 3355,
+    "wallTimeMs": 3488,
+    "outcome": "ok",
+    "truncated": false,
+    "messages": [
+      {
+        "scope": "do",
+        "id": "confirm-burn-do-3",
+        "iterations": 200000000,
+        "checksum": 405575800
+      }
+    ],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625328751,
+    "executionModel": "stateless",
+    "cpuTimeMs": 0,
+    "wallTimeMs": 3828,
+    "outcome": "canceled",
+    "truncated": false,
+    "messages": [],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625324566,
+    "executionModel": "durableObject",
+    "cpuTimeMs": 3677,
+    "wallTimeMs": 3817,
+    "outcome": "ok",
+    "truncated": false,
+    "messages": [
+      {
+        "scope": "do",
+        "id": "confirm-burn-do-4",
+        "iterations": 200000000,
+        "checksum": 405575800
+      }
+    ],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625333048,
+    "executionModel": "stateless",
+    "cpuTimeMs": 1,
+    "wallTimeMs": 3368,
+    "outcome": "canceled",
+    "truncated": false,
+    "messages": [],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625328500,
+    "executionModel": "durableObject",
+    "cpuTimeMs": 3250,
+    "wallTimeMs": 3354,
+    "outcome": "ok",
+    "truncated": false,
+    "messages": [
+      {
+        "scope": "do",
+        "id": "confirm-burn-do-5",
+        "iterations": 200000000,
+        "checksum": 405575800
+      }
+    ],
+    "exceptions": []
+  },
+  {
+    "eventTimestamp": 1793625371837,
+    "executionModel": "stateless",
+    "cpuTimeMs": 1,
+    "wallTimeMs": 21,
+    "outcome": "ok",
+    "truncated": false,
+    "messages": [],
+    "exceptions": []
+  }
+]

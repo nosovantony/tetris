@@ -1,0 +1,23 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "tetris-web",
+  "main": ".svelte-kit/cloudflare/_worker.js",
+  "compatibility_date": "2026-11-01",
+  "compatibility_flags": ["nodejs_als"],
+  "workers_dev": true,
+  "preview_urls": false,
+  "assets": { "binding": "ASSETS", "directory": ".svelte-kit/cloudflare" },
+  "services": [{ "binding": "BACKEND", "service": "tetris-backend" }],
+  "ratelimits": [{ "name": "RUN_RATE", "namespace_id": "15026061102", "simple": { "limit": 30, "period": 60 } }],
+  "observability": { "enabled": true },
+  "env": {
+    "staging": {
+      "name": "tetris-web-staging",
+      "workers_dev": true,
+      "preview_urls": false,
+      "services": [{ "binding": "BACKEND", "service": "tetris-backend-staging" }],
+      "ratelimits": [{ "name": "RUN_RATE", "namespace_id": "15026061103", "simple": { "limit": 30, "period": 60 } }],
+      "vars": { "DEPLOYMENT_ENV": "staging" }
+    }
+  }
+}

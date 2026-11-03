@@ -1,0 +1,238 @@
+{
+  "timestamp": "2026-11-02T12:59:46.237Z",
+  "node": "v26.13.0",
+  "cpu": "AMD Ryzen 7 5825U with Radeon Graphics",
+  "caveat": "Node process CPU/wall timings are not Cloudflare CPU time. No complete Tetris engine or legal Marathon replays.",
+  "codec": "unsigned LEB128 delta tick + one action byte",
+  "sizeResults": [
+    {
+      "eventsPerPlacement": 4,
+      "events": 15000,
+      "binaryBytes": 30000,
+      "base64Bytes": 40000,
+      "jsonArrayBytes": 157273,
+      "fits20000": true,
+      "fits64KiB": true
+    },
+    {
+      "eventsPerPlacement": 6,
+      "events": 22500,
+      "binaryBytes": 45000,
+      "base64Bytes": 60000,
+      "jsonArrayBytes": 235909,
+      "fits20000": false,
+      "fits64KiB": true
+    },
+    {
+      "eventsPerPlacement": 8,
+      "events": 30000,
+      "binaryBytes": 60000,
+      "base64Bytes": 80000,
+      "jsonArrayBytes": 314546,
+      "fits20000": false,
+      "fits64KiB": true
+    },
+    {
+      "eventsPerPlacement": 12,
+      "events": 45000,
+      "binaryBytes": 90000,
+      "base64Bytes": 120000,
+      "jsonArrayBytes": 479324,
+      "fits20000": false,
+      "fits64KiB": false
+    }
+  ],
+  "checks": {
+    "timerDifferentialCases": 102,
+    "boundaryVarintRoundtrip": true,
+    "boardLines": 1500,
+    "fixed": {
+      "hash": 3972466708,
+      "gravityCount": 3600,
+      "dasCount": 0,
+      "lockCount": 7200,
+      "iterations": 216001
+    },
+    "leap": {
+      "hash": 3972466708,
+      "gravityCount": 3600,
+      "dasCount": 0,
+      "lockCount": 7200,
+      "iterations": 36301
+    },
+    "heldFixed": {
+      "hash": 1041596886,
+      "gravityCount": 5,
+      "dasCount": 176,
+      "lockCount": 10,
+      "iterations": 301
+    },
+    "heldLeap": {
+      "hash": 1041596886,
+      "gravityCount": 5,
+      "dasCount": 176,
+      "lockCount": 10,
+      "iterations": 184
+    }
+  },
+  "warm": {
+    "boardOnly": {
+      "wallMs": {
+        "n": 100,
+        "min": 0.15610320000000683,
+        "median": 0.16752219999999624,
+        "p95": 0.17632229999999255,
+        "max": 0.18051280000000816
+      },
+      "processCpuMs": {
+        "n": 100,
+        "min": 0.1564,
+        "median": 0.16799999999999998,
+        "p95": 0.1777,
+        "max": 0.2931
+      },
+      "batch": 10
+    },
+    "decode": {
+      "wallMs": {
+        "n": 100,
+        "min": 0.305585300000007,
+        "median": 0.36181480000000193,
+        "p95": 0.7595004000000017,
+        "max": 1.3557947000000012
+      },
+      "processCpuMs": {
+        "n": 100,
+        "min": 0.3066,
+        "median": 0.3845,
+        "p95": 1.8105,
+        "max": 2.4536000000000002
+      },
+      "batch": 10
+    },
+    "timerFixed": {
+      "wallMs": {
+        "n": 100,
+        "min": 0.9617130000000088,
+        "median": 0.9680198000000019,
+        "p95": 0.9765753000000131,
+        "max": 0.9923734999999851
+      },
+      "processCpuMs": {
+        "n": 100,
+        "min": 0.9619,
+        "median": 0.9682999999999999,
+        "p95": 0.9880000000000001,
+        "max": 1.0187
+      },
+      "batch": 10
+    },
+    "timerLeap": {
+      "wallMs": {
+        "n": 100,
+        "min": 0.3808815999999752,
+        "median": 0.3847438999999667,
+        "p95": 0.39457760000000236,
+        "max": 0.40058399999998073
+      },
+      "processCpuMs": {
+        "n": 100,
+        "min": 0.3812,
+        "median": 0.385,
+        "p95": 0.39580000000000004,
+        "max": 0.40709999999999996
+      },
+      "batch": 10
+    },
+    "combined": {
+      "wallMs": {
+        "n": 100,
+        "min": 0.8352367999999842,
+        "median": 0.8849990000000162,
+        "p95": 0.9464805999999953,
+        "max": 1.097513300000037
+      },
+      "processCpuMs": {
+        "n": 100,
+        "min": 0.8361000000000001,
+        "median": 0.9151,
+        "p95": 0.9846999999999999,
+        "max": 1.1309
+      },
+      "batch": 10
+    }
+  },
+  "cold": {
+    "n": 20,
+    "wallMs": {
+      "n": 20,
+      "min": 3.3651119999999963,
+      "median": 3.519182999999998,
+      "p95": 3.7738249999999987,
+      "max": 4.230241000000003
+    },
+    "processCpuMs": {
+      "n": 20,
+      "min": 6.445,
+      "median": 7.336,
+      "p95": 8.507,
+      "max": 9.933
+    }
+  },
+  "burnCalibration": [
+    {
+      "iterations": 1000000,
+      "wallMs": {
+        "n": 5,
+        "min": 1.1168390000002546,
+        "median": 1.1194229999996423,
+        "p95": 1.1294800000000578,
+        "max": 1.1294800000000578
+      },
+      "processCpuMs": {
+        "n": 5,
+        "min": 1.12,
+        "median": 1.122,
+        "p95": 1.133,
+        "max": 1.133
+      },
+      "batch": 1
+    },
+    {
+      "iterations": 10000000,
+      "wallMs": {
+        "n": 5,
+        "min": 11.097426999999698,
+        "median": 11.102525000000242,
+        "p95": 11.1111149999997,
+        "max": 11.1111149999997
+      },
+      "processCpuMs": {
+        "n": 5,
+        "min": 11.098,
+        "median": 11.107,
+        "p95": 11.116,
+        "max": 11.116
+      },
+      "batch": 1
+    },
+    {
+      "iterations": 100000000,
+      "wallMs": {
+        "n": 5,
+        "min": 110.97107200000028,
+        "median": 111.56291099999908,
+        "p95": 111.65258699999958,
+        "max": 111.65258699999958
+      },
+      "processCpuMs": {
+        "n": 5,
+        "min": 110.966,
+        "median": 111.567,
+        "p95": 111.623,
+        "max": 111.623
+      },
+      "batch": 1
+    }
+  ]
+}
