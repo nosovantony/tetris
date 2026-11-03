@@ -203,3 +203,84 @@ test('opens settings modal, modifies controls and audio, and persists choices', 
 	const parsed = JSON.parse(stored!);
 	expect(parsed.audio.sfxMuted).toBe(true);
 });
+
+test('switches language between Russian and English via header toggle and settings modal', async ({
+	page
+}) => {
+	// Verify default Russian labels
+	await expect(page.getByRole('link', { name: 'Играть', exact: true })).toBeVisible();
+	await expect(page.getByRole('link', { name: 'Рекорды', exact: true })).toBeVisible();
+	await expect(page.getByRole('button', { name: 'Начать игру' })).toBeVisible();
+
+	// Click header language toggle to switch to English
+	await page.locator('.lang-switch-btn').click();
+
+	// Verify English labels
+	await expect(page.getByRole('link', { name: 'Play', exact: true })).toBeVisible();
+	await expect(page.getByRole('link', { name: 'Leaderboard', exact: true })).toBeVisible();
+	await expect(page.getByRole('button', { name: 'Start game' })).toBeVisible();
+
+	// Check localStorage persistence
+	const storedEn = await page.evaluate(() => localStorage.getItem('tetris:settings:v1'));
+	expect(storedEn).not.toBeNull();
+	expect(JSON.parse(storedEn!).language).toBe('en');
+
+	// Open Settings Modal in English
+	await page.getByRole('button', { name: 'Settings' }).first().click();
+	const modal = page.getByRole('dialog');
+	await expect(modal).toBeVisible();
+
+	// Switch to Language tab
+	await modal.getByRole('button', { name: '🌐 Language' }).click();
+	await expect(modal.getByRole('heading', { name: 'Interface Language' })).toBeVisible();
+
+	// Select Russian
+	await modal.getByRole('button', { name: /Русский/ }).click();
+
+	// Modal and page should now be in Russian
+	await expect(modal.getByRole('heading', { name: 'Язык интерфейса' })).toBeVisible();
+	await modal.getByRole('button', { name: 'Готово' }).click();
+	await expect(modal).not.toBeVisible();
+
+	// Verify Russian returned
+	await expect(page.getByRole('link', { name: 'Играть', exact: true })).toBeVisible();
+	await expect(page.getByRole('button', { name: 'Начать игру' })).toBeVisible();
+});
+
+test('allows selecting custom music source and uploading custom audio track', async ({ page }) => {
+	// Open Settings Modal
+	await page.getByRole('button', { name: 'Настройки' }).first().click();
+	const modal = page.getByRole('dialog', { name: 'Настройки' });
+	await expect(modal).toBeVisible();
+
+	// Switch to Audio tab
+	await modal.getByRole('button', { name: '🔊 Звук' }).click();
+	await expect(modal.getByRole('heading', { name: 'Звуковая система' })).toBeVisible();
+
+	// Select "Своя музыка"
+	await modal.getByRole('button', { name: 'Своя музыка' }).click();
+	await expect(modal.locator('.custom-track-card')).toBeVisible();
+	await expect(modal.getByRole('button', { name: /Выбрать трек/ })).toBeVisible();
+
+	// Create a fake audio file to upload
+	const buffer = Buffer.from([0, 1, 2, 3, 4, 5, 6, 7]);
+	const fileInput = modal.locator('input[type="file"]');
+	await fileInput.setInputFiles({
+		name: 'my_awesome_track.mp3',
+		mimeType: 'audio/mpeg',
+		buffer
+	});
+
+	// Check that track info appears
+	await expect(modal.locator('.track-name')).toHaveText('my_awesome_track.mp3');
+	await expect(modal.getByRole('button', { name: 'Удалить трек' })).toBeVisible();
+
+	// Close settings modal
+	await modal.getByRole('button', { name: 'Готово' }).click();
+	await expect(modal).not.toBeVisible();
+
+	// Verify persistence in localStorage
+	const stored = await page.evaluate(() => localStorage.getItem('tetris:settings:v1'));
+	expect(stored).not.toBeNull();
+	expect(JSON.parse(stored!).audio.bgmSource).toBe('custom');
+});

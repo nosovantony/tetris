@@ -179,7 +179,8 @@ export class SoundManager {
 		sfxVolume: 0.8,
 		bgmVolume: 0.45,
 		sfxMuted: false,
-		bgmMuted: false
+		bgmMuted: false,
+		bgmSource: 'classic'
 	};
 
 	// Music scheduling state
@@ -191,6 +192,12 @@ export class SoundManager {
 	private nextBassTime = 0;
 	private leadIndex = 0;
 	private bassIndex = 0;
+
+	// Custom BGM state
+	private customAudioElement: HTMLAudioElement | null = null;
+	private customAudioSourceNode: MediaElementAudioSourceNode | null = null;
+	private customAudioLoaded = false;
+	private customAudioUrl: string | null = null;
 
 	// Tempo: 146 BPM, sixteenth note duration in seconds
 	private readonly tempoBpm = 146;
@@ -255,8 +262,22 @@ export class SoundManager {
 	}
 
 	updateSettings(settings: AudioSettings): void {
+		const prevSource = this.settings.bgmSource;
+		const prevMuted = this.settings.bgmMuted;
 		this.settings = { ...settings };
 		this.applyVolumes();
+
+		// If BGM is actively playing and source changed, smoothly switch tracks
+		if (this.bgmRunning && prevSource !== settings.bgmSource) {
+			this.stopBgm();
+			if (!settings.bgmMuted) {
+				this.startBgm();
+			}
+		} else if (this.bgmRunning && !prevMuted && settings.bgmMuted) {
+			this.pauseBgm();
+		} else if (!this.bgmRunning && prevMuted && !settings.bgmMuted) {
+			// Stay in paused state until game triggers it
+		}
 	}
 
 	private applyVolumes(): void {
@@ -269,6 +290,82 @@ export class SoundManager {
 		this.masterGain.gain.setTargetAtTime(master, now, 0.05);
 		this.sfxGain.gain.setTargetAtTime(sfx, now, 0.05);
 		this.bgmGain.gain.setTargetAtTime(bgm, now, 0.05);
+	}
+
+	// --------------------------------------------------------------------------
+	// CUSTOM BGM AUDIO HANDLING
+	// --------------------------------------------------------------------------
+
+	/**
+	 * Sets custom audio from an ArrayBuffer / Blob.
+	 */
+	setCustomAudio(blobOrBuffer: Blob | ArrayBuffer, mimeType = 'audio/mpeg'): void {
+		if (typeof window === 'undefined') return;
+
+		// Revoke previous URL if any
+		if (this.customAudioUrl) {
+			URL.revokeObjectURL(this.customAudioUrl);
+			this.customAudioUrl = null;
+		}
+
+		const blob =
+			blobOrBuffer instanceof Blob ? blobOrBuffer : new Blob([blobOrBuffer], { type: mimeType });
+		this.customAudioUrl = URL.createObjectURL(blob);
+
+		if (!this.customAudioElement) {
+			this.customAudioElement = new Audio();
+			this.customAudioElement.loop = true;
+			this.customAudioElement.preload = 'auto';
+		}
+
+		this.customAudioElement.src = this.customAudioUrl;
+		this.customAudioLoaded = true;
+
+		// Connect to Web Audio graph if context is ready
+		this.connectCustomAudioElement();
+
+		// If custom music is selected and BGM is running, restart it with new track
+		if (this.bgmRunning && this.settings.bgmSource === 'custom') {
+			this.stopBgm();
+			this.startBgm();
+		}
+	}
+
+	/**
+	 * Clears the loaded custom audio track.
+	 */
+	clearCustomAudio(): void {
+		if (this.customAudioElement) {
+			this.customAudioElement.pause();
+			this.customAudioElement.currentTime = 0;
+			this.customAudioElement.src = '';
+		}
+		if (this.customAudioUrl) {
+			URL.revokeObjectURL(this.customAudioUrl);
+			this.customAudioUrl = null;
+		}
+		this.customAudioLoaded = false;
+
+		// If we were playing custom audio, switch back to classic theme if running
+		if (this.bgmRunning && this.settings.bgmSource === 'custom') {
+			this.stopBgm();
+			this.startBgm();
+		}
+	}
+
+	private connectCustomAudioElement(): void {
+		if (!this.customAudioElement) return;
+		const ctx = this.initContext();
+		if (!ctx || !this.bgmGain) return;
+
+		if (!this.customAudioSourceNode) {
+			try {
+				this.customAudioSourceNode = ctx.createMediaElementSource(this.customAudioElement);
+				this.customAudioSourceNode.connect(this.bgmGain);
+			} catch {
+				// Already connected or browser error
+			}
+		}
 	}
 
 	// --------------------------------------------------------------------------
@@ -594,7 +691,7 @@ export class SoundManager {
 	}
 
 	// --------------------------------------------------------------------------
-	// BGM (Korobeiniki Chiptune Synthesizer)
+	// BGM (Korobeiniki Chiptune Synthesizer or Custom Audio Track)
 	// --------------------------------------------------------------------------
 
 	startBgm(): void {
@@ -603,6 +700,17 @@ export class SoundManager {
 		if (!ctx) return;
 
 		this.bgmRunning = true;
+
+		// Custom audio playback branch
+		if (this.settings.bgmSource === 'custom' && this.customAudioLoaded && this.customAudioElement) {
+			this.connectCustomAudioElement();
+			this.customAudioElement.play().catch(() => {
+				// Autoplay policy or abort
+			});
+			return;
+		}
+
+		// Classic synthesizer branch
 		this.leadIndex = 0;
 		this.bassIndex = 0;
 		this.nextNoteTime = ctx.currentTime + 0.05;
@@ -618,10 +726,21 @@ export class SoundManager {
 			clearInterval(this.bgmTimer);
 			this.bgmTimer = null;
 		}
+		if (this.customAudioElement) {
+			this.customAudioElement.pause();
+			this.customAudioElement.currentTime = 0;
+		}
 	}
 
 	pauseBgm(): void {
-		this.stopBgm();
+		this.bgmRunning = false;
+		if (this.bgmTimer) {
+			clearInterval(this.bgmTimer);
+			this.bgmTimer = null;
+		}
+		if (this.customAudioElement) {
+			this.customAudioElement.pause();
+		}
 	}
 
 	resumeBgm(): void {

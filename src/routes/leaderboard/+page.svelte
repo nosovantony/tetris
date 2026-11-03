@@ -2,6 +2,8 @@
 	import { onMount } from 'svelte';
 	import type { PublicResult } from '#lib/shared/leaderboard.js';
 	import type { PageProps } from './$types';
+	import { i18n } from '#lib/i18n/index.js';
+
 	let { data }: PageProps = $props();
 	let personal = $state<PublicResult | null>(null);
 	let personalMessage = $state('');
@@ -9,70 +11,75 @@
 		void fetch('/api/leaderboard/me')
 			.then(async (response) => {
 				if (!response.ok) {
-					personalMessage = 'Личный рекорд недоступен. Попробуйте позже.';
+					personalMessage = i18n.t.leaderboard.recordUnavailable;
 					return;
 				}
 				const body = (await response.json()) as { result: PublicResult | null };
 				personal = body.result;
-				if (!personal) personalMessage = 'В этом браузере ещё нет подтверждённого рекорда.';
+				if (!personal) personalMessage = i18n.t.leaderboard.noRecord;
 			})
 			.catch(() => {
-				personalMessage = 'Личный рекорд недоступен.';
+				personalMessage = i18n.t.leaderboard.recordUnavailable;
 			});
 	});
 </script>
 
-<svelte:head><title>Рекорды — Marathon 150</title></svelte:head>
+<svelte:head
+	><title>{i18n.current === 'ru' ? 'Рекорды — Marathon 150' : 'Leaderboard — Marathon 150'}</title
+	></svelte:head
+>
 
 <main id="main">
-	<span class="eyebrow">Marathon 150 / общий рейтинг</span>
-	<h1>Таблица рекордов</h1>
-	<p>
-		Место в топе определяет счёт. При равенстве выше результат, достигнутый раньше. Результаты
-		рейтинговых партий пересчитываются по replay на сервере. Топ обновляется с задержкой до 30
-		секунд.
-	</p>
+	<span class="eyebrow">{i18n.t.leaderboard.eyebrow}</span>
+	<h1>{i18n.t.leaderboard.title}</h1>
+	<p>{i18n.t.leaderboard.desc}</p>
 	{#if personal}<p role="status">
-			Ваш рекорд: <strong>{personal.score.toLocaleString('ru-RU')}</strong> · {personal.lines} линий ·
-			уровень {personal.level}
+			{i18n.t.leaderboard.yourRecord}
+			<strong>{personal.score.toLocaleString(i18n.current === 'ru' ? 'ru-RU' : 'en-US')}</strong>
+			· {personal.lines}
+			{i18n.t.leaderboard.linesSuffix} ·
+			{i18n.t.leaderboard.levelPrefix}
+			{personal.level}
 		</p>
 	{:else if personalMessage}<p role="status">{personalMessage}</p>{/if}
 	{#if data.unavailable}
 		<div class="notice" role="status">
-			<strong>Хранилище пока недоступно</strong>
-			<p>
-				Попробуйте обновить страницу позже. При локальном запуске используйте <code
-					>npm run dev</code
-				> — он запускает оба Worker.
-			</p>
+			<strong>{i18n.t.leaderboard.storageUnavailableTitle}</strong>
+			<p>{i18n.t.leaderboard.storageUnavailableDesc}</p>
 		</div>
 	{:else if data.entries.length === 0}
 		<div class="notice">
-			<strong>Первый рекорд ещё впереди</strong>
-			<p>Таблица подключена к SQLite и пока пуста. Тестовые очки сюда не добавляются.</p>
+			<strong>{i18n.t.leaderboard.emptyTitle}</strong>
+			<p>{i18n.t.leaderboard.emptyDesc}</p>
 		</div>
 	{:else}
 		<div class="table-wrap">
 			<table>
-				<caption>100 лучших результатов Marathon 150</caption>
-				<thead
-					><tr
-						><th scope="col">Место</th><th scope="col">Игрок</th><th scope="col">Очки</th><th
-							scope="col">Линии</th
-						><th scope="col">Уровень</th></tr
-					></thead
-				>
-				<tbody
-					>{#each data.entries as entry, index}<tr
-							><td>{index + 1}</td><td>{entry.playerName}{entry.isClear ? ' · Clear' : ''}</td><td
-								>{entry.score.toLocaleString('ru-RU')}</td
-							><td>{entry.lines}</td><td>{entry.level}</td></tr
-						>{/each}</tbody
-				>
+				<caption>{i18n.t.leaderboard.tableCaption}</caption>
+				<thead>
+					<tr>
+						<th scope="col">{i18n.t.leaderboard.colRank}</th>
+						<th scope="col">{i18n.t.leaderboard.colPlayer}</th>
+						<th scope="col">{i18n.t.leaderboard.colScore}</th>
+						<th scope="col">{i18n.t.leaderboard.colLines}</th>
+						<th scope="col">{i18n.t.leaderboard.colLevel}</th>
+					</tr>
+				</thead>
+				<tbody>
+					{#each data.entries as entry, index}
+						<tr>
+							<td>{index + 1}</td>
+							<td>{entry.playerName}{entry.isClear ? ' · Clear' : ''}</td>
+							<td>{entry.score.toLocaleString(i18n.current === 'ru' ? 'ru-RU' : 'en-US')}</td>
+							<td>{entry.lines}</td>
+							<td>{entry.level}</td>
+						</tr>
+					{/each}
+				</tbody>
 			</table>
 		</div>
 	{/if}
-	<a href="/">← Играть</a>
+	<a href="/">{i18n.t.leaderboard.backLink}</a>
 </main>
 
 <style>

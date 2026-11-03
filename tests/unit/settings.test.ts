@@ -35,6 +35,13 @@ describe('settings store and bindings', () => {
 		expect(clamped.touch.layout).toBe('left');
 		expect(clamped.touch.deadzone).toBe(0.5);
 		expect(clamped.touch.haptics).toBe(false);
+		expect(clamped.language).toBe('ru');
+
+		const english = validateSettings({ language: 'en' });
+		expect(english.language).toBe('en');
+
+		const fallback = validateSettings({ language: 'fr' });
+		expect(fallback.language).toBe('ru');
 	});
 
 	it('maps control bindings to key lookup map', () => {
@@ -66,6 +73,8 @@ describe('settings store and bindings', () => {
 		expect(humanKeyName('ArrowUp')).toBe('↑');
 		expect(humanKeyName('ArrowDown')).toBe('↓');
 		expect(humanKeyName('Space')).toBe('Пробел');
+		expect(humanKeyName('Space', 'ru')).toBe('Пробел');
+		expect(humanKeyName('Space', 'en')).toBe('Space');
 		expect(humanKeyName('KeyZ')).toBe('Z');
 		expect(humanKeyName('KeyC')).toBe('C');
 		expect(humanKeyName('Digit1')).toBe('1');
@@ -73,6 +82,18 @@ describe('settings store and bindings', () => {
 		expect(humanKeyName('ShiftLeft')).toBe('Left Shift');
 		expect(humanKeyName('Escape')).toBe('Esc');
 		expect(humanKeyName('')).toBe('—');
+	});
+
+	it('provides comprehensive translations for both Russian and English', async () => {
+		const { TRANSLATIONS } = await import('../../src/lib/i18n/translations');
+		expect(TRANSLATIONS.ru.game.startTitle).toBeTruthy();
+		expect(TRANSLATIONS.en.game.startTitle).toBe('Your Marathon');
+		expect(TRANSLATIONS.en.settings.tabLanguage).toBe('🌐 Language');
+		expect(TRANSLATIONS.ru.settings.tabLanguage).toBe('🌐 Язык');
+		expect(TRANSLATIONS.en.nav.play).toBe('Play');
+		expect(TRANSLATIONS.ru.nav.play).toBe('Играть');
+		expect(TRANSLATIONS.en.leaderboard.title).toBe('Leaderboard');
+		expect(TRANSLATIONS.ru.leaderboard.title).toBe('Таблица рекордов');
 	});
 
 	it('resolves key conflicts when assigning keys', () => {
@@ -147,7 +168,7 @@ describe('audio sound synthesizer', () => {
 		}).not.toThrow();
 	});
 
-	it('manages BGM playback and settings updates without errors', () => {
+	it('manages BGM playback, custom audio, and settings updates without errors', () => {
 		const manager = new SoundManager();
 
 		expect(() => {
@@ -160,8 +181,22 @@ describe('audio sound synthesizer', () => {
 				sfxVolume: 0.6,
 				bgmVolume: 0.4,
 				sfxMuted: false,
-				bgmMuted: true
+				bgmMuted: true,
+				bgmSource: 'custom'
 			});
+			manager.setCustomAudio(new Uint8Array([1, 2, 3]).buffer);
+			manager.clearCustomAudio();
 		}).not.toThrow();
+	});
+
+	it('validates audio bgmSource correctly', () => {
+		const classic = validateSettings({ audio: { bgmSource: 'classic' } });
+		expect(classic.audio.bgmSource).toBe('classic');
+
+		const custom = validateSettings({ audio: { bgmSource: 'custom' } });
+		expect(custom.audio.bgmSource).toBe('custom');
+
+		const fallback = validateSettings({ audio: { bgmSource: 'unknown' } });
+		expect(fallback.audio.bgmSource).toBe('classic');
 	});
 });

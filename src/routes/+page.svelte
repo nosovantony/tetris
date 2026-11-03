@@ -1,8 +1,15 @@
 <script lang="ts">
 	import Game from '#lib/components/Game.svelte';
+	import { i18n } from '#lib/i18n/index.js';
 </script>
 
-<svelte:head><title>Marathon 150 — играть в тетрис</title></svelte:head>
+<svelte:head
+	><title
+		>{i18n.current === 'ru'
+			? 'Marathon 150 — играть в тетрис'
+			: 'Marathon 150 — play Tetris'}</title
+	></svelte:head
+>
 
 <main id="main"><Game /></main>
 

@@ -18,12 +18,15 @@ export interface TouchSettings {
 	haptics: boolean;
 }
 
+export type BgmSource = 'classic' | 'custom';
+
 export interface AudioSettings {
 	masterVolume: number;
 	sfxVolume: number;
 	bgmVolume: number;
 	sfxMuted: boolean;
 	bgmMuted: boolean;
+	bgmSource: BgmSource;
 }
 
 export interface GameSettings {
@@ -31,8 +34,11 @@ export interface GameSettings {
 	arrTicks: number;
 }
 
+import type { Language } from '../i18n/translations';
+
 export interface UserSettings {
 	version: number;
+	language: Language;
 	controls: ControlBindings;
 	touch: TouchSettings;
 	audio: AudioSettings;
@@ -61,6 +67,7 @@ export const DEFAULT_BINDINGS: Readonly<ControlBindings> = {
 
 export const DEFAULT_SETTINGS: Readonly<UserSettings> = {
 	version: 1,
+	language: 'ru',
 	controls: DEFAULT_BINDINGS,
 	touch: {
 		layout: 'right',
@@ -72,7 +79,8 @@ export const DEFAULT_SETTINGS: Readonly<UserSettings> = {
 		sfxVolume: 0.8,
 		bgmVolume: 0.45,
 		sfxMuted: false,
-		bgmMuted: false
+		bgmMuted: false,
+		bgmSource: 'classic'
 	},
 	game: {
 		dasTicks: 8,

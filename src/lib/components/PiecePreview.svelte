@@ -2,10 +2,22 @@
 	import { shape } from '../game/constants';
 	import type { PieceType } from '../game/types';
 	import { COLORS } from './colors';
+	import { i18n } from '../i18n/index.svelte';
 	let { type, muted = false }: { type: PieceType | null; muted?: boolean } = $props();
 </script>
 
-<svg viewBox="0 0 60 34" role="img" aria-label={type ? `Фигура ${type}` : 'Пусто'} class:muted>
+<svg
+	viewBox="0 0 60 34"
+	role="img"
+	aria-label={type
+		? i18n.current === 'ru'
+			? `Фигура ${type}`
+			: `Piece ${type}`
+		: i18n.current === 'ru'
+			? 'Пусто'
+			: 'Empty'}
+	class:muted
+>
 	{#if type}
 		{#each shape(type, 0) as [x, y]}
 			<rect

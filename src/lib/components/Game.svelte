@@ -15,8 +15,10 @@
 	import { parseTicket, toBase64 } from '../shared/runs';
 	import SettingsModal from './SettingsModal.svelte';
 	import { soundManager } from '../audio/sound';
+	import { loadCustomAudioTrack } from '../audio/custom-audio';
 	import { bindingsToKeyMap, humanKeyName, loadSettings } from '../settings/store';
 	import { DEFAULT_SETTINGS, type UserSettings } from '../settings/types';
+	import { i18n } from '../i18n/index.svelte';
 
 	// User customizable controls & sound settings
 	let userSettings = $state<UserSettings>({ ...DEFAULT_SETTINGS });
@@ -32,7 +34,7 @@
 	let arena: HTMLDivElement;
 	let mounted = $state(false);
 	let replayAvailable = $state(true);
-	let storageMessage = $state('Проверяем сохранение…');
+	let storageMessage = $state(i18n.t.game.storageChecking);
 	let restored = $state(false);
 	let store: GameStore | null = null;
 	let lastSavedTick = -1;
@@ -69,12 +71,11 @@
 				lastSavedTick = tick;
 				storageMessage =
 					session.phase === 'finished' && (!session.ticket || submission === 'sent')
-						? 'Завершённая партия удалена из автосохранения.'
-						: 'Партия сохранена в этом браузере.';
+						? i18n.t.game.storageRemovedNotice
+						: i18n.t.game.storageSavedNotice;
 			})
 			.catch(() => {
-				storageMessage =
-					'Не удалось сохранить партию. Не закрывайте страницу, если хотите продолжить.';
+				storageMessage = i18n.t.game.storageSaveFailNotice;
 			})
 			.finally(() => {
 				saving = false;
@@ -119,7 +120,7 @@
 		)
 			return;
 		submission = 'sending';
-		apiMessage = 'Сервер проверяет replay…';
+		apiMessage = i18n.t.game.serverValidating;
 		try {
 			const response = await fetch('/api/runs/finish', {
 				method: 'POST',
@@ -136,19 +137,25 @@
 				duplicate?: boolean;
 				improved?: boolean;
 			};
-			if (!response.ok) throw new Error(result.error ?? 'Не удалось отправить результат');
-			if (!result.accepted) throw new Error('Сервер не подтвердил результат');
+			if (!response.ok)
+				throw new Error(
+					result.error ??
+						(i18n.current === 'ru' ? 'Не удалось отправить результат' : 'Failed to submit result')
+				);
+			if (!result.accepted)
+				throw new Error(
+					i18n.current === 'ru' ? 'Сервер не подтвердил результат' : 'Server rejected the result'
+				);
 			submission = 'sent';
 			apiMessage = result.duplicate
-				? 'Результат уже принят.'
+				? i18n.t.game.scoreAlreadyAccepted
 				: result.improved
-					? 'Рекорд подтверждён сервером!'
-					: 'Результат принят. Личный рекорд остался прежним.';
+					? i18n.t.game.scoreNewRecord
+					: i18n.t.game.scoreAcceptedRecordSame;
 			persist(true);
 		} catch (error) {
 			submission = 'idle';
-			apiMessage =
-				error instanceof Error ? error.message : 'Ошибка сети; можно повторить отправку.';
+			apiMessage = error instanceof Error ? error.message : i18n.t.game.scoreNetworkError;
 		}
 	}
 	function clearInputs() {
@@ -268,10 +275,10 @@
 	let concealed = $derived(phase === 'paused' || phase === 'countdown' || phase === 'ready');
 	let outcome = $derived(
 		game.status === 'won'
-			? 'Марафон пройден!'
+			? i18n.t.game.victoryTitle
 			: game.status === 'timeout'
-				? 'Время вышло'
-				: 'Партия окончена'
+				? i18n.t.game.timeExpiredTitle
+				: i18n.t.game.gameOverTitle
 	);
 
 	$effect(() => {
@@ -282,6 +289,15 @@
 		alive = true;
 		let disposed = false;
 		userSettings = loadSettings();
+		if (userSettings.language) {
+			i18n.setLanguage(userSettings.language);
+		}
+		void (async () => {
+			const custom = await loadCustomAudioTrack();
+			if (custom && !disposed) {
+				soundManager.setCustomAudio(custom.buffer, custom.meta.type);
+			}
+		})();
 		soundManager.updateSettings(userSettings.audio);
 		let prevLocked = session.game.piecesLocked;
 		let prevLevel = session.game.level;
@@ -304,8 +320,7 @@
 						session.restore(checkpoint);
 						selectedMode = session.game.config.mode;
 						if (session.ticket && Date.now() >= session.ticket.claims.expiresAt)
-							apiMessage =
-								'Срок рейтинговой сессии истёк. Можно доиграть локально, но отправка уже недоступна.';
+							apiMessage = i18n.t.game.expiredLocalNotice;
 						startLevel = session.game.config.startLevel;
 						restored = true;
 						lastSavedTick = session.game.tick;
@@ -316,19 +331,16 @@
 						prevPhase = session.phase;
 						storageMessage =
 							session.phase === 'finished'
-								? 'Завершённая рейтинговая партия восстановлена. Можно отправить результат.'
-								: 'Незавершённая партия восстановлена. Нажмите «Продолжить».';
+								? i18n.t.game.restoredRankedNotice
+								: i18n.t.game.restoredUnfinishedNotice;
 						sync();
 					} catch {
 						await opened.clear();
-						storageMessage = 'Сохранение устарело или повреждено. Можно начать новую партию.';
+						storageMessage = i18n.t.game.storageCorruptedNotice;
 					}
-				} else storageMessage = 'Автосохранение включено для этого браузера.';
+				} else storageMessage = i18n.t.game.storageEnabled;
 			} catch (error) {
-				storageMessage =
-					error instanceof Error
-						? error.message
-						: 'Автосохранение недоступно. Можно играть без сохранения.';
+				storageMessage = error instanceof Error ? error.message : i18n.t.game.storageUnavailable;
 			} finally {
 				if (!disposed) mounted = true;
 			}
@@ -442,7 +454,7 @@
 
 <div class="game-topbar">
 	<div>
-		<span class="eyebrow">Тренировка / Рейтинг</span>
+		<span class="eyebrow">{i18n.t.game.eyebrow}</span>
 		<h1>Marathon <span>150</span></h1>
 	</div>
 	<div class="topbar-actions">
@@ -450,8 +462,8 @@
 			type="button"
 			class="settings-topbar-btn"
 			onclick={openSettings}
-			title="Настройки звука и управления"
-			aria-label="Настройки"
+			title={i18n.t.game.settingsTooltip}
+			aria-label={i18n.t.game.settingsAria}
 		>
 			<svg
 				viewBox="0 0 24 24"
@@ -469,106 +481,114 @@
 					d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"
 				/>
 			</svg>
-			<span>Настройки</span>
+			<span>{i18n.t.game.settingsAria}</span>
 		</button>
 		<div class="mode-badge">
 			<i></i>
-			{game.config.mode === 'ranked' ? 'Рейтинг · серверная проверка' : 'Тренировка · без рейтинга'}
+			{game.config.mode === 'ranked' ? i18n.t.game.rankedBadge : i18n.t.game.trainingBadge}
 		</div>
 	</div>
 </div>
 
 <div class="game-layout">
 	<aside class="brief">
-		<div class="chapter">01 — 150 / УРОВНИ</div>
-		<h2>Линия за линией.</h2>
-		<p>Найди ритм. Сохрани место для следующей фигуры. Дойди до 1 500 линий.</p>
+		<div class="chapter">{i18n.t.game.chapter}</div>
+		<h2>{i18n.t.game.tagline}</h2>
+		<p>{i18n.t.game.rhythmDesc}</p>
 		<dl class="instructions">
 			<div>
 				<dt>
-					{(userSettings.controls.left[0] && humanKeyName(userSettings.controls.left[0])) || '←'}
-					{(userSettings.controls.right[0] && humanKeyName(userSettings.controls.right[0])) || '→'}
+					{(userSettings.controls.left[0] &&
+						humanKeyName(userSettings.controls.left[0], i18n.current)) ||
+						'←'}
+					{(userSettings.controls.right[0] &&
+						humanKeyName(userSettings.controls.right[0], i18n.current)) ||
+						'→'}
 				</dt>
-				<dd>Сдвиг</dd>
+				<dd>{i18n.t.game.actionMove}</dd>
 			</div>
 			<div>
 				<dt>
 					{(userSettings.controls['rotate-cw'][0] &&
-						humanKeyName(userSettings.controls['rotate-cw'][0])) ||
+						humanKeyName(userSettings.controls['rotate-cw'][0], i18n.current)) ||
 						'↑'} · {(userSettings.controls['rotate-ccw'][0] &&
-						humanKeyName(userSettings.controls['rotate-ccw'][0])) ||
+						humanKeyName(userSettings.controls['rotate-ccw'][0], i18n.current)) ||
 						'Z'}
 				</dt>
-				<dd>Поворот ↻ / ↺</dd>
+				<dd>{i18n.t.game.actionRotate}</dd>
 			</div>
 			<div>
 				<dt>
 					{(userSettings.controls['soft-drop'][0] &&
-						humanKeyName(userSettings.controls['soft-drop'][0])) ||
+						humanKeyName(userSettings.controls['soft-drop'][0], i18n.current)) ||
 						'↓'}
 				</dt>
-				<dd>Мягкое падение</dd>
+				<dd>{i18n.t.game.actionSoftDrop}</dd>
 			</div>
 			<div>
 				<dt>
 					{(userSettings.controls['hard-drop'][0] &&
-						humanKeyName(userSettings.controls['hard-drop'][0])) ||
-						'Space'}
+						humanKeyName(userSettings.controls['hard-drop'][0], i18n.current)) ||
+						(i18n.current === 'ru' ? 'Пробел' : 'Space')}
 				</dt>
-				<dd>Сбросить фигуру</dd>
+				<dd>{i18n.t.game.actionHardDrop}</dd>
 			</div>
 			<div>
 				<dt>
-					{(userSettings.controls.hold[0] && humanKeyName(userSettings.controls.hold[0])) || 'C'}
+					{(userSettings.controls.hold[0] &&
+						humanKeyName(userSettings.controls.hold[0], i18n.current)) ||
+						'C'}
 				</dt>
-				<dd>Hold</dd>
+				<dd>{i18n.t.game.hold}</dd>
 			</div>
 			<div>
 				<dt>Esc</dt>
-				<dd>Пауза / продолжить</dd>
+				<dd>{i18n.t.game.actionPauseResume}</dd>
 			</div>
 		</dl>
 		<p class="local-note">
-			Тренировка — с любого уровня. Рейтинг — с уровня 1 и проверкой replay на сервере. Рейтинговую
-			партию нужно завершить и отправить в течение 24 часов, активное время — до 3 часов. Паузы
-			разрешены. Автосохранение остаётся в этом браузере до 7 дней; при аварийном закрытии возможна
-			потеря последних действий.
+			{i18n.t.game.rulesNote}
 		</p>
 	</aside>
 
 	<section class="play-area" aria-label="Marathon 150">
-		<div class="hud" aria-label="Показатели партии">
+		<div class="hud" aria-label={i18n.current === 'ru' ? 'Показатели партии' : 'Game HUD'}>
 			<div>
-				<span>Очки</span><strong data-testid="score">{game.score.toLocaleString('ru-RU')}</strong>
+				<span>{i18n.t.game.score}</span><strong data-testid="score"
+					>{game.score.toLocaleString(i18n.current === 'ru' ? 'ru-RU' : 'en-US')}</strong
+				>
 			</div>
 			<div>
-				<span>Уровень</span><strong data-testid="level"
+				<span>{i18n.t.game.level}</span><strong data-testid="level"
 					>{game.level.toString().padStart(2, '0')}</strong
 				>
 			</div>
 			<div>
-				<span>Линии</span><strong data-testid="lines">{game.lines}<small> / {target}</small></strong
+				<span>{i18n.t.game.lines}</span><strong data-testid="lines"
+					>{game.lines}<small> / {target}</small></strong
 				>
 			</div>
-			<div><span>Время</span><strong data-testid="time">{time}</strong></div>
+			<div><span>{i18n.t.game.time}</span><strong data-testid="time">{time}</strong></div>
 		</div>
 		<div class="field-layout">
 			<div class="piece-rail hold">
 				<span class="rail-title"
 					>HOLD <kbd
-						>{(userSettings.controls.hold[0] && humanKeyName(userSettings.controls.hold[0])) ||
+						>{(userSettings.controls.hold[0] &&
+							humanKeyName(userSettings.controls.hold[0], i18n.current)) ||
 							'C'}</kbd
 					></span
 				>
 				<PiecePreview type={concealed ? null : game.hold} muted={game.holdUsed} />
-				<span class="rail-note">{game.holdUsed ? 'После фиксации' : 'Про запас'}</span>
+				<span class="rail-note">{game.holdUsed ? i18n.t.game.afterLock : i18n.t.game.holdNote}</span
+				>
 			</div>
 			<div
 				class="arena"
 				bind:this={arena}
 				tabindex="-1"
 				role="region"
-				aria-label="Управление игрой с клавиатуры"
+				aria-label={i18n.t.game.arenaAria}
 				aria-describedby="game-status"
 				data-phase={phase}
 			>
@@ -586,9 +606,12 @@
 					<div class="overlay">
 						{#if phase === 'ready'}
 							<span class="overlay-icon" aria-hidden="true">✦</span>
-							<h2>Твой марафон</h2>
-							<p>150 уровней.<br />Одна длинная партия.</p>
-							<label for="game-mode">Режим</label>
+							<h2>{i18n.t.game.startTitle}</h2>
+							<p>
+								{#each i18n.t.game.startSub.split('\n') as line, idx}{#if idx > 0}<br
+										/>{/if}{line}{/each}
+							</p>
+							<label for="game-mode">{i18n.t.game.modeLabel}</label>
 							<select
 								id="game-mode"
 								bind:value={selectedMode}
@@ -597,9 +620,11 @@
 								}}
 								disabled={!mounted || starting}
 							>
-								<option value="training">Тренировка</option><option value="ranked">Рейтинг</option>
+								<option value="training">{i18n.t.game.modeTraining}</option><option value="ranked"
+									>{i18n.t.game.modeRanked}</option
+								>
 							</select>
-							<label for="start-level">Стартовый уровень</label>
+							<label for="start-level">{i18n.t.game.startLevelLabel}</label>
 							<select
 								id="start-level"
 								bind:value={startLevel}
@@ -610,38 +635,52 @@
 									>{/each}
 							</select>
 							<button class="button start" onclick={start} disabled={!mounted || starting}
-								>Начать игру <span aria-hidden="true">→</span></button
+								>{i18n.t.game.startButton} <span aria-hidden="true">→</span></button
 							>
 						{:else if phase === 'paused'}
 							<span class="overlay-icon" aria-hidden="true">Ⅱ</span>
-							<h2>{restored ? 'Партия восстановлена' : 'Пауза'}</h2>
-							<p>Поле скрыто.<br />Время остановлено.</p>
-							<button class="button" onclick={resume}>Продолжить</button>
+							<h2>{restored ? i18n.t.game.restoredTitle : i18n.t.game.pauseTitle}</h2>
+							<p>{i18n.t.game.pauseDesc}</p>
+							<button class="button" onclick={resume}>{i18n.t.game.resumeButton}</button>
 							<button class="button quiet pause-settings-btn" onclick={openSettings}
-								>⚙ Настройки</button
+								>⚙ {i18n.t.game.settingsButton}</button
 							>
 							{#if restored}<button
 									class="quiet new-game"
 									onclick={() => {
-										if (confirm('Удалить сохранённую партию и начать заново?')) start();
-									}}>Новая партия</button
+										if (
+											confirm(
+												i18n.current === 'ru'
+													? 'Удалить сохранённую партию и начать заново?'
+													: 'Discard saved game and start new?'
+											)
+										)
+											start();
+									}}>{i18n.t.game.newGameButton}</button
 								>{/if}
 						{:else if phase === 'countdown'}
 							<span class="countdown">{countdown}</span>
-							<p>Приготовься</p>
+							<p>{i18n.current === 'ru' ? 'Приготовься' : 'Get Ready'}</p>
 						{:else}
 							<span class="overlay-icon" aria-hidden="true"
 								>{game.status === 'won' ? '✦' : '◇'}</span
 							>
 							<h2>{outcome}</h2>
 							<p>
-								{game.score.toLocaleString('ru-RU')} очков<br />{game.lines} линий · уровень {game.level}
+								{game.score.toLocaleString(i18n.current === 'ru' ? 'ru-RU' : 'en-US')}
+								{i18n.current === 'ru' ? 'очков' : 'points'}<br />{game.lines}
+								{i18n.current === 'ru' ? 'линий' : 'lines'} · {i18n.current === 'ru'
+									? 'уровень'
+									: 'level'}
+								{game.level}
 							</p>
 							{#if game.timeBonus > 0}<p>
-									Бонус времени: +{game.timeBonus.toLocaleString('ru-RU')}
+									{i18n.current === 'ru' ? 'Бонус времени' : 'Time bonus'}: +{game.timeBonus.toLocaleString(
+										i18n.current === 'ru' ? 'ru-RU' : 'en-US'
+									)}
 								</p>{/if}
 							{#if game.config.mode === 'ranked' && session.ticket}
-								<label for="player-name">Имя в рейтинге</label>
+								<label for="player-name">{i18n.t.game.playerNameLabel}</label>
 								<input
 									id="player-name"
 									bind:value={playerName}
@@ -654,13 +693,19 @@
 									disabled={submission !== 'idle' || !replayAvailable}
 								>
 									{submission === 'sending'
-										? 'Проверка…'
+										? i18n.current === 'ru'
+											? 'Проверка…'
+											: 'Validating…'
 										: submission === 'sent'
-											? 'Принято'
-											: 'Отправить результат'}
+											? i18n.current === 'ru'
+												? 'Принято'
+												: 'Accepted'
+											: i18n.t.game.submitButton}
 								</button>
 							{/if}
-							<label for="restart-mode">Режим новой партии</label>
+							<label for="restart-mode"
+								>{i18n.current === 'ru' ? 'Режим новой партии' : 'Next game mode'}</label
+							>
 							<select
 								id="restart-mode"
 								bind:value={selectedMode}
@@ -669,9 +714,11 @@
 								}}
 								disabled={starting || submission === 'sending'}
 							>
-								<option value="training">Тренировка</option><option value="ranked">Рейтинг</option>
+								<option value="training">{i18n.t.game.modeTraining}</option><option value="ranked"
+									>{i18n.t.game.modeRanked}</option
+								>
 							</select>
-							<label for="restart-level">Стартовый уровень</label>
+							<label for="restart-level">{i18n.t.game.startLevelLabel}</label>
 							<select
 								id="restart-level"
 								bind:value={startLevel}
@@ -681,14 +728,14 @@
 									>{/each}</select
 							>
 							<button class="button" onclick={start} disabled={starting || submission === 'sending'}
-								>Играть снова</button
+								>{i18n.t.game.playAgainButton}</button
 							>
 						{/if}
 					</div>
 				{/if}
 			</div>
 			<div class="piece-rail next">
-				<span class="rail-title">ДАЛЬШЕ</span>
+				<span class="rail-title">{i18n.t.game.next.toUpperCase()}</span>
 				{#each game.next as type, index}<div class:next-first={index === 0}>
 						<PiecePreview type={concealed ? null : type} />
 					</div>{/each}
@@ -697,30 +744,38 @@
 		<div class="below-field">
 			<span id="game-status" role="status" aria-live="polite"
 				>{phase === 'ready'
-					? 'Готов к старту'
+					? i18n.current === 'ru'
+						? 'Готов к старту'
+						: 'Ready to start'
 					: phase === 'paused'
-						? 'Игра на паузе'
+						? i18n.current === 'ru'
+							? 'Игра на паузе'
+							: 'Game paused'
 						: phase === 'countdown'
-							? `Старт через ${countdown}`
+							? i18n.current === 'ru'
+								? `Старт через ${countdown}`
+								: `Starting in ${countdown}`
 							: phase === 'finished'
 								? outcome
-								: 'Партия идёт'}</span
+								: i18n.current === 'ru'
+									? 'Партия идёт'
+									: 'Game in progress'}</span
 			>
 			<div class="below-actions">
-				<button class="quiet" onclick={openSettings} aria-label="Настройки звука и управления"
-					>⚙ Настройки</button
+				<button class="quiet" onclick={openSettings} aria-label={i18n.t.game.settingsTooltip}
+					>⚙ {i18n.t.game.settingsButton}</button
 				>
 				{#if phase === 'running' || phase === 'countdown'}<button
 						class="quiet"
 						onclick={pause}
-						aria-label="Пауза">Ⅱ Пауза</button
+						aria-label={i18n.t.game.pauseTitle}>Ⅱ {i18n.t.game.pauseTitle}</button
 					>{/if}
 			</div>
 		</div>
 		<div
 			class="touch-controls"
 			class:flipped={userSettings.touch.layout === 'left'}
-			aria-label="Сенсорное управление"
+			aria-label={i18n.current === 'ru' ? 'Сенсорное управление' : 'Touch controls'}
 		>
 			<Joystick
 				disabled={phase !== 'running'}
@@ -730,28 +785,28 @@
 			<div class="action-pad">
 				<ControlButton
 					action="hold"
-					label="Hold"
+					label={i18n.t.game.touchHold}
 					symbol="⇄"
 					disabled={phase !== 'running'}
 					onpress={action}
 				/>
 				<ControlButton
 					action="hard-drop"
-					label="Сбросить"
+					label={i18n.t.game.touchDrop}
 					symbol="⇓"
 					disabled={phase !== 'running'}
 					onpress={action}
 				/>
 				<ControlButton
 					action="rotate-ccw"
-					label="Поворот ↺"
+					label={i18n.t.game.touchRotateCcw}
 					symbol="↺"
 					disabled={phase !== 'running'}
 					onpress={action}
 				/>
 				<ControlButton
 					action="rotate-cw"
-					label="Поворот ↻"
+					label={i18n.t.game.touchRotateCw}
 					symbol="↻"
 					primary
 					disabled={phase !== 'running'}
@@ -760,7 +815,9 @@
 			</div>
 		</div>
 		{#if !replayAvailable}<p class="replay-note">
-				Локальная игра продолжается, но лимит записи replay превышен.
+				{i18n.current === 'ru'
+					? 'Локальная игра продолжается, но лимит записи replay превышен.'
+					: 'Local game continues, but replay recording limit exceeded.'}
 			</p>{/if}
 		<p class="storage-note" role="status" data-testid="storage-status">{storageMessage}</p>
 		{#if apiMessage}<p class="storage-note" role="status" data-testid="api-status">

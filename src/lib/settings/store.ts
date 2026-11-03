@@ -18,7 +18,9 @@ export function bindingsToKeyMap(bindings: ControlBindings): Record<string, Cont
 	return map;
 }
 
-export function humanKeyName(code: string): string {
+import type { Language } from '../i18n/translations';
+
+export function humanKeyName(code: string, lang: Language = 'ru'): string {
 	if (!code) return '—';
 	if (code.startsWith('Key')) return code.slice(3).toUpperCase();
 	if (code.startsWith('Digit')) return code.slice(5);
@@ -33,7 +35,7 @@ export function humanKeyName(code: string): string {
 		case 'ArrowDown':
 			return '↓';
 		case 'Space':
-			return 'Пробел';
+			return lang === 'en' ? 'Space' : 'Пробел';
 		case 'ShiftLeft':
 			return 'Left Shift';
 		case 'ShiftRight':
@@ -138,6 +140,7 @@ export function validateSettings(raw: unknown): UserSettings {
 	const bgmVolume = clamp(candidate.audio?.bgmVolume, 0, 1, DEFAULT_SETTINGS.audio.bgmVolume);
 	const sfxMuted = Boolean(candidate.audio?.sfxMuted);
 	const bgmMuted = Boolean(candidate.audio?.bgmMuted);
+	const bgmSource = candidate.audio?.bgmSource === 'custom' ? 'custom' : 'classic';
 
 	const dasTicks = Math.round(
 		clamp(candidate.game?.dasTicks, 1, 20, DEFAULT_SETTINGS.game.dasTicks)
@@ -146,11 +149,14 @@ export function validateSettings(raw: unknown): UserSettings {
 		clamp(candidate.game?.arrTicks, 0, 6, DEFAULT_SETTINGS.game.arrTicks)
 	);
 
+	const language: Language = candidate.language === 'en' ? 'en' : 'ru';
+
 	return {
 		version: 1,
+		language,
 		controls: bindings,
 		touch: { layout, deadzone, haptics },
-		audio: { masterVolume, sfxVolume, bgmVolume, sfxMuted, bgmMuted },
+		audio: { masterVolume, sfxVolume, bgmVolume, sfxMuted, bgmMuted, bgmSource },
 		game: { dasTicks, arrTicks }
 	};
 }

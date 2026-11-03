@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { stickDirection, type StickDirection } from '../input/touch';
+	import { i18n } from '../i18n/index.svelte';
 	let {
 		disabled = false,
 		deadzone = 0.25,
@@ -39,7 +40,9 @@
 	type="button"
 	class="joystick"
 	{disabled}
-	aria-label="Джойстик: влево, вправо, вниз"
+	aria-label={i18n.current === 'ru'
+		? 'Джойстик: влево, вправо, вниз'
+		: 'Joystick: left, right, down'}
 	data-direction={direction ?? 'neutral'}
 	onpointerdown={(event) => {
 		if (pointer !== null || (event.pointerType === 'mouse' && event.button !== 0)) return;

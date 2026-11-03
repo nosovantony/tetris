@@ -2,6 +2,7 @@
 	import { cells, ghostPiece } from '../game/board';
 	import type { GameState } from '../game/types';
 	import { COLORS } from './colors';
+	import { i18n } from '../i18n/index.svelte';
 	let { game, concealed = false }: { game: GameState; concealed?: boolean } = $props();
 	const id = $props.id();
 	let stack = $derived(
@@ -16,7 +17,13 @@
 <svg
 	viewBox="0 0 100 200"
 	role="img"
-	aria-label={concealed ? 'Поле скрыто на паузе' : 'Игровое поле, 10 колонок и 20 строк'}
+	aria-label={concealed
+		? i18n.current === 'ru'
+			? 'Поле скрыто на паузе'
+			: 'Board is hidden while paused'
+		: i18n.current === 'ru'
+			? 'Игровое поле, 10 колонок и 20 строк'
+			: 'Game board, 10 columns and 20 rows'}
 	data-testid="board"
 >
 	<defs>
