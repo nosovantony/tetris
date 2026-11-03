@@ -13,6 +13,15 @@
 	import { openGameStore, type GameStore } from '../storage/game-store';
 	import { encodeReplay } from '../game/codec';
 	import { parseTicket, toBase64 } from '../shared/runs';
+	import SettingsModal from './SettingsModal.svelte';
+	import { soundManager } from '../audio/sound';
+	import { bindingsToKeyMap, humanKeyName, loadSettings } from '../settings/store';
+	import { DEFAULT_SETTINGS, type UserSettings } from '../settings/types';
+
+	// User customizable controls & sound settings
+	let userSettings = $state<UserSettings>({ ...DEFAULT_SETTINGS });
+	let settingsOpen = $state(false);
+	let keyMap = $derived(bindingsToKeyMap(userSettings.controls));
 
 	// Deterministic SSR preview; actual seeds are generated only on Start in the browser.
 	const session = new GameSession({ seed: 0, mode: 'training' });
@@ -74,9 +83,19 @@
 	const input = new InputMux((action) => session.enqueue(action));
 	const keyboard = createKeyboard({
 		enabled: () =>
-			session.phase === 'running' || session.phase === 'paused' || session.phase === 'countdown',
+			!settingsOpen &&
+			(session.phase === 'running' || session.phase === 'paused' || session.phase === 'countdown'),
+		getKey: (code) => keyMap[code],
 		press: (source, control) => {
-			if (session.phase === 'running') input.press(source, control);
+			if (session.phase === 'running') {
+				input.press(source, control);
+				void soundManager.resume();
+				if (control === 'left' || control === 'right') soundManager.playMove();
+				else if (control === 'rotate-cw' || control === 'rotate-ccw') soundManager.playRotate();
+				else if (control === 'soft-drop') soundManager.playSoftDrop();
+				else if (control === 'hard-drop') soundManager.playHardDrop();
+				else if (control === 'hold') soundManager.playHold();
+			}
 		},
 		release: (source) => input.release(source),
 		pause: () => {
@@ -139,15 +158,21 @@
 	function pause() {
 		const active = session.phase === 'running' || session.phase === 'countdown';
 		session.pause();
+		soundManager.pauseBgm();
 		clearInputs();
 		sync();
 		if (active) persist(true);
 	}
 	function resume() {
+		void soundManager.resume();
 		clearInputs();
 		session.resume(performance.now());
 		sync();
 		arena?.focus({ preventScroll: true });
+	}
+	function openSettings() {
+		if (session.phase === 'running') pause();
+		settingsOpen = true;
 	}
 	async function start() {
 		if (starting || submission === 'sending') return;
@@ -155,6 +180,7 @@
 		apiMessage = '';
 		clearInputs();
 		try {
+			void soundManager.resume();
 			if (selectedMode === 'ranked') {
 				const response = await fetch('/api/runs', {
 					method: 'POST',
@@ -168,7 +194,13 @@
 				session.start(ticket.claims.config, ticket);
 			} else {
 				const seed = crypto.getRandomValues(new Uint32Array(1))[0];
-				session.start({ seed, mode: 'training', startLevel: Number(startLevel) });
+				session.start({
+					seed,
+					mode: 'training',
+					startLevel: Number(startLevel),
+					dasTicks: userSettings.game.dasTicks,
+					arrTicks: userSettings.game.arrTicks
+				});
 			}
 			submission = 'idle';
 			restored = false;
@@ -185,11 +217,45 @@
 		}
 	}
 	function stick(direction: StickDirection) {
-		if (direction && session.phase === 'running') input.press('stick', direction);
-		else input.release('stick');
+		if (direction && session.phase === 'running') {
+			input.press('stick', direction);
+			void soundManager.resume();
+			if (
+				userSettings.touch.haptics &&
+				typeof navigator !== 'undefined' &&
+				'vibrate' in navigator
+			) {
+				try {
+					navigator.vibrate(10);
+				} catch {
+					// vibration unavailable
+				}
+			}
+			if (direction === 'left' || direction === 'right') soundManager.playMove();
+			else if (direction === 'soft-drop') soundManager.playSoftDrop();
+		} else {
+			input.release('stick');
+		}
 	}
 	function action(control: Control) {
-		if (session.phase === 'running') input.press('pad', control);
+		if (session.phase === 'running') {
+			input.press('pad', control);
+			void soundManager.resume();
+			if (
+				userSettings.touch.haptics &&
+				typeof navigator !== 'undefined' &&
+				'vibrate' in navigator
+			) {
+				try {
+					navigator.vibrate(12);
+				} catch {
+					// vibration unavailable
+				}
+			}
+			if (control === 'rotate-cw' || control === 'rotate-ccw') soundManager.playRotate();
+			else if (control === 'hard-drop') soundManager.playHardDrop();
+			else if (control === 'hold') soundManager.playHold();
+		}
 	}
 	let time = $derived(
 		`${Math.floor(game.tick / 3600)
@@ -208,9 +274,21 @@
 				: 'Партия окончена'
 	);
 
+	$effect(() => {
+		soundManager.updateSettings(userSettings.audio);
+	});
+
 	onMount(() => {
 		alive = true;
 		let disposed = false;
+		userSettings = loadSettings();
+		soundManager.updateSettings(userSettings.audio);
+		let prevLocked = session.game.piecesLocked;
+		let prevLevel = session.game.level;
+		let prevStatus = session.game.status;
+		let prevCountdown = session.countdown;
+		let prevPhase = session.phase;
+
 		void (async () => {
 			try {
 				const opened = await openGameStore();
@@ -231,6 +309,11 @@
 						startLevel = session.game.config.startLevel;
 						restored = true;
 						lastSavedTick = session.game.tick;
+						prevLocked = session.game.piecesLocked;
+						prevLevel = session.game.level;
+						prevStatus = session.game.status;
+						prevCountdown = session.countdown;
+						prevPhase = session.phase;
 						storageMessage =
 							session.phase === 'finished'
 								? 'Завершённая рейтинговая партия восстановлена. Можно отправить результат.'
@@ -254,6 +337,46 @@
 		function frame(now: number) {
 			const before = `${session.game.tick}:${session.phase}:${session.countdown}`;
 			session.frame(now);
+
+			if (session.game.piecesLocked > prevLocked) {
+				const clear = session.game.lastClear;
+				if (clear && clear.lines > 0) {
+					if (clear.lines === 4) soundManager.playTetris();
+					else soundManager.playClear(clear.lines);
+				} else {
+					soundManager.playLock();
+				}
+				prevLocked = session.game.piecesLocked;
+			}
+			if (session.game.level > prevLevel) {
+				soundManager.playLevelUp();
+				prevLevel = session.game.level;
+			}
+			if (session.countdown !== prevCountdown && session.phase === 'countdown') {
+				soundManager.playCountdown(session.countdown);
+				prevCountdown = session.countdown;
+			}
+			if (session.game.status !== prevStatus) {
+				if (session.game.status === 'won') {
+					soundManager.playVictory();
+					soundManager.stopBgm();
+				} else if (session.game.status === 'lost' || session.game.status === 'timeout') {
+					soundManager.playGameOver();
+					soundManager.stopBgm();
+				}
+				prevStatus = session.game.status;
+			}
+			if (session.phase !== prevPhase) {
+				if (session.phase === 'running') {
+					soundManager.startBgm();
+				} else if (session.phase === 'paused') {
+					soundManager.pauseBgm();
+				} else if (session.phase === 'finished' || session.phase === 'ready') {
+					soundManager.stopBgm();
+				}
+				prevPhase = session.phase;
+			}
+
 			if (
 				phase !== session.phase ||
 				before !== `${session.game.tick}:${session.phase}:${session.countdown}`
@@ -265,6 +388,7 @@
 			raf = requestAnimationFrame(frame);
 		}
 		function keydown(event: KeyboardEvent) {
+			if (settingsOpen) return;
 			if (isEditable(event.target)) {
 				if (session.phase === 'running') pause();
 				return;
@@ -279,6 +403,7 @@
 			keyboard.keydown(event);
 		}
 		function keyup(event: KeyboardEvent) {
+			if (settingsOpen) return;
 			keyboard.keyup(event);
 		}
 		function visibility() {
@@ -298,6 +423,7 @@
 			alive = false;
 			disposed = true;
 			pause();
+			soundManager.stopBgm();
 			cancelAnimationFrame(raf);
 			window.removeEventListener('keydown', keydown);
 			window.removeEventListener('keyup', keyup);
@@ -319,9 +445,36 @@
 		<span class="eyebrow">Тренировка / Рейтинг</span>
 		<h1>Marathon <span>150</span></h1>
 	</div>
-	<div class="mode-badge">
-		<i></i>
-		{game.config.mode === 'ranked' ? 'Рейтинг · серверная проверка' : 'Тренировка · без рейтинга'}
+	<div class="topbar-actions">
+		<button
+			type="button"
+			class="settings-topbar-btn"
+			onclick={openSettings}
+			title="Настройки звука и управления"
+			aria-label="Настройки"
+		>
+			<svg
+				viewBox="0 0 24 24"
+				width="16"
+				height="16"
+				stroke="currentColor"
+				stroke-width="2"
+				fill="none"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				aria-hidden="true"
+			>
+				<circle cx="12" cy="12" r="3" />
+				<path
+					d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"
+				/>
+			</svg>
+			<span>Настройки</span>
+		</button>
+		<div class="mode-badge">
+			<i></i>
+			{game.config.mode === 'ranked' ? 'Рейтинг · серверная проверка' : 'Тренировка · без рейтинга'}
+		</div>
 	</div>
 </div>
 
@@ -332,23 +485,42 @@
 		<p>Найди ритм. Сохрани место для следующей фигуры. Дойди до 1 500 линий.</p>
 		<dl class="instructions">
 			<div>
-				<dt>← →</dt>
+				<dt>
+					{(userSettings.controls.left[0] && humanKeyName(userSettings.controls.left[0])) || '←'}
+					{(userSettings.controls.right[0] && humanKeyName(userSettings.controls.right[0])) || '→'}
+				</dt>
 				<dd>Сдвиг</dd>
 			</div>
 			<div>
-				<dt>↑ / X · Z</dt>
+				<dt>
+					{(userSettings.controls['rotate-cw'][0] &&
+						humanKeyName(userSettings.controls['rotate-cw'][0])) ||
+						'↑'} · {(userSettings.controls['rotate-ccw'][0] &&
+						humanKeyName(userSettings.controls['rotate-ccw'][0])) ||
+						'Z'}
+				</dt>
 				<dd>Поворот ↻ / ↺</dd>
 			</div>
 			<div>
-				<dt>↓</dt>
+				<dt>
+					{(userSettings.controls['soft-drop'][0] &&
+						humanKeyName(userSettings.controls['soft-drop'][0])) ||
+						'↓'}
+				</dt>
 				<dd>Мягкое падение</dd>
 			</div>
 			<div>
-				<dt>Space</dt>
+				<dt>
+					{(userSettings.controls['hard-drop'][0] &&
+						humanKeyName(userSettings.controls['hard-drop'][0])) ||
+						'Space'}
+				</dt>
 				<dd>Сбросить фигуру</dd>
 			</div>
 			<div>
-				<dt>C / Shift</dt>
+				<dt>
+					{(userSettings.controls.hold[0] && humanKeyName(userSettings.controls.hold[0])) || 'C'}
+				</dt>
 				<dd>Hold</dd>
 			</div>
 			<div>
@@ -382,7 +554,12 @@
 		</div>
 		<div class="field-layout">
 			<div class="piece-rail hold">
-				<span class="rail-title">HOLD <kbd>C</kbd></span>
+				<span class="rail-title"
+					>HOLD <kbd
+						>{(userSettings.controls.hold[0] && humanKeyName(userSettings.controls.hold[0])) ||
+							'C'}</kbd
+					></span
+				>
 				<PiecePreview type={concealed ? null : game.hold} muted={game.holdUsed} />
 				<span class="rail-note">{game.holdUsed ? 'После фиксации' : 'Про запас'}</span>
 			</div>
@@ -440,6 +617,9 @@
 							<h2>{restored ? 'Партия восстановлена' : 'Пауза'}</h2>
 							<p>Поле скрыто.<br />Время остановлено.</p>
 							<button class="button" onclick={resume}>Продолжить</button>
+							<button class="button quiet pause-settings-btn" onclick={openSettings}
+								>⚙ Настройки</button
+							>
 							{#if restored}<button
 									class="quiet new-game"
 									onclick={() => {
@@ -526,14 +706,27 @@
 								? outcome
 								: 'Партия идёт'}</span
 			>
-			{#if phase === 'running' || phase === 'countdown'}<button
-					class="quiet"
-					onclick={pause}
-					aria-label="Пауза">Ⅱ Пауза</button
-				>{/if}
+			<div class="below-actions">
+				<button class="quiet" onclick={openSettings} aria-label="Настройки звука и управления"
+					>⚙ Настройки</button
+				>
+				{#if phase === 'running' || phase === 'countdown'}<button
+						class="quiet"
+						onclick={pause}
+						aria-label="Пауза">Ⅱ Пауза</button
+					>{/if}
+			</div>
 		</div>
-		<div class="touch-controls" aria-label="Сенсорное управление">
-			<Joystick disabled={phase !== 'running'} onchange={stick} />
+		<div
+			class="touch-controls"
+			class:flipped={userSettings.touch.layout === 'left'}
+			aria-label="Сенсорное управление"
+		>
+			<Joystick
+				disabled={phase !== 'running'}
+				deadzone={userSettings.touch.deadzone}
+				onchange={stick}
+			/>
 			<div class="action-pad">
 				<ControlButton
 					action="hold"
@@ -576,6 +769,14 @@
 	</section>
 </div>
 
+<SettingsModal
+	open={settingsOpen}
+	bind:settings={userSettings}
+	onclose={() => {
+		settingsOpen = false;
+	}}
+/>
+
 <style>
 	.overlay {
 		overflow-y: auto;
@@ -600,6 +801,46 @@
 		align-items: center;
 		gap: 16px;
 		margin-bottom: 28px;
+	}
+	.topbar-actions {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+	}
+	.settings-topbar-btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		font-size: 11px;
+		color: #ccd9e9;
+		background: #182333;
+		border: 1px solid #36455c;
+		border-radius: 20px;
+		padding: 6px 12px;
+		cursor: pointer;
+		transition:
+			background 0.15s,
+			border-color 0.15s,
+			color 0.15s;
+	}
+	.settings-topbar-btn:hover {
+		background: #23344b;
+		border-color: var(--accent);
+		color: #fff;
+	}
+	.settings-topbar-btn svg {
+		color: var(--accent);
+	}
+	.pause-settings-btn {
+		margin-top: 8px;
+	}
+	.below-actions {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+	}
+	.touch-controls.flipped {
+		flex-direction: row-reverse;
 	}
 	h1 {
 		font-size: clamp(30px, 4vw, 46px);

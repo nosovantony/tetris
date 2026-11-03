@@ -173,3 +173,33 @@ test('touch joystick supports dragging, deadzone, cancellation and independent a
 	await expect(page.getByTestId('locked-cell')).toHaveCount(4);
 	await cdp.detach();
 });
+
+test('opens settings modal, modifies controls and audio, and persists choices', async ({
+	page
+}) => {
+	await page.getByRole('button', { name: 'Настройки' }).first().click();
+	const modal = page.getByRole('dialog', { name: 'Настройки' });
+	await expect(modal).toBeVisible();
+
+	// Switch to Audio tab
+	await modal.getByRole('button', { name: '🔊 Звук' }).click();
+	await expect(modal.getByRole('heading', { name: 'Звуковая система' })).toBeVisible();
+
+	// Toggle SFX off
+	const sfxCheckbox = modal.locator('input[type="checkbox"]').first();
+	await sfxCheckbox.click();
+
+	// Switch back to Controls tab
+	await modal.getByRole('button', { name: '🎮 Управление' }).click();
+	await expect(modal.getByRole('heading', { name: 'Клавиатура' })).toBeVisible();
+
+	// Close settings modal
+	await modal.getByRole('button', { name: 'Готово' }).click();
+	await expect(modal).not.toBeVisible();
+
+	// Check localStorage persistence
+	const stored = await page.evaluate(() => localStorage.getItem('tetris:settings:v1'));
+	expect(stored).not.toBeNull();
+	const parsed = JSON.parse(stored!);
+	expect(parsed.audio.sfxMuted).toBe(true);
+});

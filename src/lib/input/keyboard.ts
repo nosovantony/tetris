@@ -33,18 +33,19 @@ export function createKeyboard(options: {
 	press: (source: string, control: Control) => void;
 	release: (source: string) => void;
 	pause: () => void;
+	getKey?: (code: string) => Control | undefined;
 }) {
 	const pressed = new Set<string>();
 	return {
 		keydown(event: KeyboardInput): void {
 			if (!options.enabled() || event.ctrlKey || event.metaKey || event.altKey) return;
-			const control = KEYS[event.code];
+			const control = options.getKey ? options.getKey(event.code) : KEYS[event.code];
 			if (!control && event.code !== 'Escape') return;
 			event.preventDefault();
 			if (event.repeat || pressed.has(event.code)) return;
 			pressed.add(event.code);
 			if (event.code === 'Escape') options.pause();
-			else options.press(`key:${event.code}`, control);
+			else if (control) options.press(`key:${event.code}`, control);
 		},
 		keyup(event: KeyboardInput): void {
 			// Release even if modifiers/focus changed after keydown.

@@ -2,8 +2,13 @@
 	import { stickDirection, type StickDirection } from '../input/touch';
 	let {
 		disabled = false,
+		deadzone = 0.25,
 		onchange
-	}: { disabled?: boolean; onchange: (direction: StickDirection) => void } = $props();
+	}: {
+		disabled?: boolean;
+		deadzone?: number;
+		onchange: (direction: StickDirection) => void;
+	} = $props();
 	let pointer = $state<number | null>(null);
 	let direction = $state<StickDirection>(null);
 	let knob = $state({ x: 0, y: 0 });
@@ -19,7 +24,7 @@
 		const y = (event.clientY - rect.top - rect.height / 2) / (rect.height * 0.38);
 		const distance = Math.max(1, Math.hypot(x, y));
 		knob = { x: (x / distance) * 23, y: (y / distance) * 23 };
-		const next = stickDirection(x, y, direction);
+		const next = stickDirection(x, y, direction, deadzone);
 		if (next !== direction) {
 			direction = next;
 			onchange(next);

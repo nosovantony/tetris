@@ -3,9 +3,15 @@ import type { HeldControl } from './controls';
 export type StickDirection = HeldControl | null;
 
 /** Normalized stick coordinates, +y down. No upward action or diagonal inputs. */
-export function stickDirection(x: number, y: number, previous: StickDirection): StickDirection {
+export function stickDirection(
+	x: number,
+	y: number,
+	previous: StickDirection,
+	deadzone: number = 0.25
+): StickDirection {
 	if (!Number.isFinite(x) || !Number.isFinite(y)) return null;
-	if (Math.hypot(x, y) < (previous ? 0.18 : 0.25)) return null;
+	const threshold = previous ? deadzone * 0.72 : deadzone;
+	if (Math.hypot(x, y) < threshold) return null;
 	const ax = Math.abs(x),
 		ay = Math.abs(y);
 	// Retain the old sector until the other axis exceeds it by 25%.
