@@ -8,12 +8,15 @@
 	"durable_objects": {
 		"bindings": [
 			{ "name": "LEADERBOARD", "class_name": "LeaderboardDO" },
-			{ "name": "VALIDATION", "class_name": "ValidationDO" }
+			{ "name": "VALIDATION", "class_name": "ValidationDO" },
+			{ "name": "DUEL_ROOM", "class_name": "DuelRoomDO" },
+			{ "name": "MATCHMAKER", "class_name": "MatchmakerDO" }
 		]
 	},
 	"migrations": [
 		{ "tag": "v1", "new_sqlite_classes": ["LeaderboardDO"] },
-		{ "tag": "v2", "new_sqlite_classes": ["ValidationDO"] }
+		{ "tag": "v2", "new_sqlite_classes": ["ValidationDO"] },
+		{ "tag": "v3", "new_classes": ["DuelRoomDO", "MatchmakerDO"] }
 	],
 	"observability": { "enabled": true },
 	"env": {
@@ -24,7 +27,9 @@
 			"durable_objects": {
 				"bindings": [
 					{ "name": "LEADERBOARD", "class_name": "LeaderboardDO" },
-					{ "name": "VALIDATION", "class_name": "ValidationDO" }
+					{ "name": "VALIDATION", "class_name": "ValidationDO" },
+					{ "name": "DUEL_ROOM", "class_name": "DuelRoomDO" },
+					{ "name": "MATCHMAKER", "class_name": "MatchmakerDO" }
 				]
 			}
 		}

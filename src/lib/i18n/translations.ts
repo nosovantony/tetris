@@ -4,6 +4,7 @@ export const TRANSLATIONS = {
 	ru: {
 		nav: {
 			play: 'Играть',
+			duel: 'Дуэль',
 			leaderboard: 'Рекорды',
 			skipToContent: 'К содержимому',
 			stagingNotice: 'STAGING — тестовая версия. Рекорды и сохранения отделены от основной игры.',
@@ -173,11 +174,49 @@ export const TRANSLATIONS = {
 			colLines: 'Линии',
 			colLevel: 'Уровень',
 			backLink: '← Играть'
+		},
+		duel: {
+			title: 'Дуэль 1 на 1',
+			subtitle: 'Битва в реальном времени до 2 побед (Best of 3)',
+			rulesDesc:
+				'Очистка 2+ линий отправляет мусор сопернику. Очистка своих линий сжигает входящий мусор.',
+			nameLabel: 'Ваше имя',
+			quickPlay: '⚡ Быстрая игра',
+			quickPlayDesc: 'Найти случайного соперника онлайн',
+			createRoom: '🔗 Создать комнату',
+			createRoomDesc: 'Сгенерировать код для игры с другом',
+			joinRoomHeading: 'Войти по коду',
+			roomCodePlaceholder: 'Код комнаты (напр. room-123)',
+			joinBtn: 'Войти',
+			waitingOpponent: 'Ожидание соперника…',
+			shareLinkText: 'Отправьте ссылку другу, чтобы начать дуэль:',
+			copyLinkBtn: 'Скопировать ссылку',
+			copied: 'Скопировано в буфер!',
+			cancelWait: 'Отмена',
+			roundOf: 'Раунд {round} (до 2 побед)',
+			roundScore: 'Счёт матча',
+			you: 'Вы',
+			opponent: 'Соперник',
+			opponentBoardAria: 'Поле соперника',
+			pendingGarbage: 'Входящие линии',
+			getReady: 'Приготовься!',
+			roundWon: 'Раунд выигран! 🎉',
+			roundLost: 'Раунд проигран',
+			matchWon: '🏆 Победа в матче!',
+			matchLost: 'Поражение в матче',
+			opponentLeft: 'Соперник покинул игру',
+			rematchBtn: 'Реванш',
+			rematchReady: 'Вы готовы к реваншу',
+			opponentReady: 'Соперник готов!',
+			lobbyBtn: 'В лобби',
+			connecting: 'Подключение к серверу…',
+			connectionError: 'Ошибка подключения к серверу'
 		}
 	},
 	en: {
 		nav: {
 			play: 'Play',
+			duel: 'Duel',
 			leaderboard: 'Leaderboard',
 			skipToContent: 'Skip to content',
 			stagingNotice:
@@ -346,6 +385,43 @@ export const TRANSLATIONS = {
 			colLines: 'Lines',
 			colLevel: 'Level',
 			backLink: '← Play'
+		},
+		duel: {
+			title: '1v1 Tetris Duel',
+			subtitle: 'Real-time competitive battle (Best of 3)',
+			rulesDesc:
+				'Clearing 2+ lines sends garbage to your opponent. Line clears cancel incoming attacks.',
+			nameLabel: 'Your name',
+			quickPlay: '⚡ Quick Play',
+			quickPlayDesc: 'Find a random opponent online',
+			createRoom: '🔗 Create Private Room',
+			createRoomDesc: 'Generate a code to invite a friend',
+			joinRoomHeading: 'Join by Code',
+			roomCodePlaceholder: 'Room code (e.g. room-123)',
+			joinBtn: 'Join',
+			waitingOpponent: 'Waiting for opponent…',
+			shareLinkText: 'Share this link with a friend to duel:',
+			copyLinkBtn: 'Copy Link',
+			copied: 'Copied to clipboard!',
+			cancelWait: 'Cancel',
+			roundOf: 'Round {round} (Best of 3)',
+			roundScore: 'Match Score',
+			you: 'You',
+			opponent: 'Opponent',
+			opponentBoardAria: "Opponent's board",
+			pendingGarbage: 'Incoming lines',
+			getReady: 'Get Ready!',
+			roundWon: 'Round Won! 🎉',
+			roundLost: 'Round Lost',
+			matchWon: '🏆 Match Victory!',
+			matchLost: 'Match Defeat',
+			opponentLeft: 'Opponent left the match',
+			rematchBtn: 'Rematch',
+			rematchReady: 'You are ready for rematch',
+			opponentReady: 'Opponent is ready!',
+			lobbyBtn: 'Back to Lobby',
+			connecting: 'Connecting to server…',
+			connectionError: 'Server connection error'
 		}
 	}
 };

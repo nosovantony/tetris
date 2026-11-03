@@ -1,5 +1,7 @@
 import { LeaderboardDO } from './leaderboard-do';
 import { ValidationDO } from './validation-do';
+import { DuelRoomDO } from './duel-room-do';
+import { MatchmakerDO } from './matchmaker-do';
 import {
 	issueRun,
 	verifyRun,
@@ -11,11 +13,13 @@ import { RULES_VERSION } from '../../src/lib/shared/leaderboard';
 import { failure, HttpFailure, readLimited } from '../../src/lib/server/http';
 import { MAX_FINISH_BYTES } from '../../src/lib/shared/runs';
 
-export { LeaderboardDO, ValidationDO };
+export { LeaderboardDO, ValidationDO, DuelRoomDO, MatchmakerDO };
 
 interface Env {
 	LEADERBOARD: DurableObjectNamespace<LeaderboardDO>;
 	VALIDATION: DurableObjectNamespace<ValidationDO>;
+	DUEL_ROOM: DurableObjectNamespace<DuelRoomDO>;
+	MATCHMAKER: DurableObjectNamespace<MatchmakerDO>;
 	RUN_SIGNING_KEY?: string;
 }
 
@@ -24,6 +28,13 @@ export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
 		const path = new URL(request.url).pathname;
 		try {
+			if (path === '/duel/quick') {
+				return await env.MATCHMAKER.getByName('global').fetch(request);
+			}
+			if (path === '/duel/ws') {
+				const room = new URL(request.url).searchParams.get('room') || 'default';
+				return await env.DUEL_ROOM.getByName(room).fetch(request);
+			}
 			if (request.method === 'GET' && path === '/me') {
 				const guestId = await guestIdentity(
 					env.RUN_SIGNING_KEY ?? '',

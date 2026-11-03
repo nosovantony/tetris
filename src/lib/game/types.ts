@@ -1,6 +1,6 @@
 export type PieceType = 'I' | 'J' | 'L' | 'O' | 'S' | 'T' | 'Z';
 export type Rotation = 0 | 1 | 2 | 3;
-export type Cell = PieceType | null;
+export type Cell = PieceType | 'G' | null;
 export type Point = readonly [x: number, y: number];
 export type Board = Cell[][];
 export interface ActivePiece {

@@ -99,3 +99,10 @@ test('SQLite: health, atomic acceptance, idempotency, best score, version separa
 	assert.equal(invalid.status, 400);
 	assert.equal((await get(`/profile?guestId=missing&rulesVersion=${rulesVersion}`)).result, null);
 });
+
+test('Duel Matchmaker: quick-play room allocation', async () => {
+	const res = await fetch(`${url}/duel/quick`, { method: 'POST' });
+	assert.equal(res.status, 200);
+	const data = await res.json();
+	assert.match(data.roomId, /^quick-/);
+});

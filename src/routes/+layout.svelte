@@ -43,7 +43,9 @@
 	</a>
 	<div class="header-right">
 		<nav aria-label="Основная навигация">
-			<a href="/">{i18n.t.nav.play}</a><a href="/leaderboard">{i18n.t.nav.leaderboard}</a>
+			<a href="/">{i18n.t.nav.play}</a><a href="/duel">{i18n.t.nav.duel}</a><a href="/leaderboard"
+				>{i18n.t.nav.leaderboard}</a
+			>
 		</nav>
 		<button
 			type="button"
