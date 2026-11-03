@@ -95,6 +95,17 @@ test.describe('Duel 1v1 Mode', () => {
 		await expect(page1.locator('.countdown-num')).not.toBeVisible({ timeout: 10000 });
 		await expect(page2.locator('.countdown-num')).not.toBeVisible({ timeout: 10000 });
 
+		// Joining a room must not cancel the local fixed-step loop. At level 1
+		// the active piece moves down without any user input.
+		const activeCell = page1.locator('[data-testid="active-cell"]').first();
+		const beforeY = await activeCell.getAttribute('y');
+		const beforeTick = await page1.locator('.board-wrapper').getAttribute('data-game-tick');
+		await page1.waitForTimeout(1300);
+		const afterY = await activeCell.getAttribute('y');
+		const afterTick = await page1.locator('.board-wrapper').getAttribute('data-game-tick');
+		expect(Number(afterTick)).toBeGreaterThan(Number(beforeTick));
+		expect(afterY).not.toBe(beforeY);
+
 		// Player 1 drops piece
 		await page1.keyboard.press('Space');
 		await page1.waitForTimeout(500);
@@ -104,6 +115,39 @@ test.describe('Duel 1v1 Mode', () => {
 
 		await context1.close();
 		await context2.close();
+	});
+
+	test('quick play starts a room and advances both local game loops', async ({ browser }) => {
+		const context1 = await browser.newContext();
+		const context2 = await browser.newContext();
+		const page1 = await context1.newPage();
+		const page2 = await context2.newPage();
+
+		try {
+			await page1.goto('/duel');
+			await page2.goto('/duel');
+			await page1.getByRole('button', { name: /Быстрая игра|Quick Play/i }).click();
+			await expect(page1.locator('.waiting-title')).toBeVisible();
+			await page2.getByRole('button', { name: /Быстрая игра|Quick Play/i }).click();
+
+			await expect(page1.locator('.countdown-num')).toBeVisible({ timeout: 10000 });
+			await expect(page2.locator('.countdown-num')).toBeVisible({ timeout: 10000 });
+			await expect(page1.locator('.countdown-num')).not.toBeVisible({ timeout: 10000 });
+			await expect(page2.locator('.countdown-num')).not.toBeVisible({ timeout: 10000 });
+
+			const tick1 = Number(await page1.locator('.board-wrapper').getAttribute('data-game-tick'));
+			const tick2 = Number(await page2.locator('.board-wrapper').getAttribute('data-game-tick'));
+			await page1.waitForTimeout(1000);
+			expect(tick1).toBeLessThan(
+				Number(await page1.locator('.board-wrapper').getAttribute('data-game-tick'))
+			);
+			expect(tick2).toBeLessThan(
+				Number(await page2.locator('.board-wrapper').getAttribute('data-game-tick'))
+			);
+		} finally {
+			await context1.close();
+			await context2.close();
+		}
 	});
 
 	test('allows selecting Best of 1 format and playing a 1-win match', async ({ browser }) => {

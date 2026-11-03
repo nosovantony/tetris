@@ -148,6 +148,7 @@
 
 	function connectToRoom(targetRoom: string, customWins?: number) {
 		disconnectWs();
+		startFrameLoop();
 		roomId = targetRoom;
 		if (customWins) {
 			selectedTargetWins = customWins;
@@ -317,8 +318,17 @@
 		}
 	}
 
+	function startFrameLoop() {
+		if (animFrameId === null && typeof requestAnimationFrame !== 'undefined') {
+			lastFrameTime = performance.now();
+			animFrameId = requestAnimationFrame(frame);
+		}
+	}
+
 	// Game step loop
 	function frame(now: number) {
+		// The callback has fired; clear the handle so the next frame can be queued.
+		animFrameId = null;
 		if (isPlaying && game.status === 'playing') {
 			const elapsed = now - lastFrameTime;
 			lastFrameTime = now;
@@ -388,7 +398,7 @@
 			}
 			game = { ...game };
 		}
-		animFrameId = requestAnimationFrame(frame);
+		startFrameLoop();
 	}
 
 	async function startQuickPlay() {
@@ -664,6 +674,7 @@
 
 					<div
 						class="board-wrapper"
+						data-game-tick={game.tick}
 						tabindex="-1"
 						role="region"
 						aria-label="Игровое поле"
