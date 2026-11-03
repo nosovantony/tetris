@@ -16,7 +16,7 @@
 	"migrations": [
 		{ "tag": "v1", "new_sqlite_classes": ["LeaderboardDO"] },
 		{ "tag": "v2", "new_sqlite_classes": ["ValidationDO"] },
-		{ "tag": "v3", "new_classes": ["DuelRoomDO", "MatchmakerDO"] }
+		{ "tag": "v3", "new_sqlite_classes": ["DuelRoomDO", "MatchmakerDO"] }
 	],
 	"observability": { "enabled": true },
 	"env": {

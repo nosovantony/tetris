@@ -1,5 +1,5 @@
 {
-  "startedAt": "2026-11-03T12:18:01.967Z",
+  "startedAt": "2026-11-03T23:23:48.664Z",
   "base": "https://tetris-web-staging.nosov-antony.workers.dev",
   "checks": [
     {
@@ -13,9 +13,9 @@
     },
     {
       "name": "authoritative result, ignored client scores, idempotent receipt, private profile",
-      "score": 246,
+      "score": 234,
       "lines": 0,
-      "durationTicks": 12
+      "durationTicks": 11
     },
     {
       "name": "public top contains verified result, shared Cache API HIT without identity"
@@ -33,5 +33,5 @@
     }
   ],
   "outcome": "passed",
-  "finishedAt": "2026-11-03T12:18:19.343Z"
+  "finishedAt": "2026-11-03T23:24:05.126Z"
 }
