@@ -15,6 +15,7 @@ export class DuelRoomDO extends DurableObject {
 	private countdownTimer: ReturnType<typeof setTimeout> | null = null;
 	private currentSeed = 0;
 	private roomId = '';
+	private targetWins = 2;
 
 	constructor(ctx: DurableObjectState, env: Cloudflare.Env) {
 		super(ctx, env);
@@ -29,7 +30,8 @@ export class DuelRoomDO extends DurableObject {
 					roomId: this.roomId,
 					playersCount: this.sockets.size,
 					status: this.status,
-					wins: this.wins
+					wins: this.wins,
+					targetWins: this.targetWins
 				});
 			}
 			return new Response('Expected WebSocket upgrade', { status: 426 });
@@ -45,6 +47,17 @@ export class DuelRoomDO extends DurableObject {
 		this.roomId = url.searchParams.get('room') || 'default';
 		const rawName = url.searchParams.get('name') || 'Игрок';
 		const playerName = rawName.trim().slice(0, 30) || 'Игрок';
+
+		// Set targetWins when room is initially created by first player
+		if (this.sockets.size === 0) {
+			const parsedWins = parseInt(
+				url.searchParams.get('targetWins') || url.searchParams.get('wins') || '',
+				10
+			);
+			if (parsedWins === 1 || parsedWins === 2 || parsedWins === 3) {
+				this.targetWins = parsedWins;
+			}
+		}
 
 		// Determine player slot
 		const takenIds = new Set(Array.from(this.sockets.values()).map((p) => p.id));
@@ -68,7 +81,8 @@ export class DuelRoomDO extends DurableObject {
 		this.send(server, {
 			type: 'welcome',
 			playerId,
-			roomId: this.roomId
+			roomId: this.roomId,
+			targetWins: this.targetWins
 		});
 
 		// Broadcast updated room state
@@ -163,8 +177,8 @@ export class DuelRoomDO extends DurableObject {
 					const winnerId: PlayerId = senderPlayer.id === 'p1' ? 'p2' : 'p1';
 					this.wins[winnerId]++;
 
-					if (this.wins[winnerId] >= 2) {
-						// First to 2 wins -> Match victory
+					if (this.wins[winnerId] >= this.targetWins) {
+						// Match victory
 						this.status = 'match_end';
 						this.broadcast({
 							type: 'round_end',
@@ -284,7 +298,8 @@ export class DuelRoomDO extends DurableObject {
 			status: this.status,
 			players,
 			round: this.round,
-			wins: this.wins
+			wins: this.wins,
+			targetWins: this.targetWins
 		});
 	}
 }

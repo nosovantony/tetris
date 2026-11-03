@@ -105,4 +105,10 @@ test('Duel Matchmaker: quick-play room allocation', async () => {
 	assert.equal(res.status, 200);
 	const data = await res.json();
 	assert.match(data.roomId, /^quick-/);
+
+	const res1w = await fetch(`${url}/duel/quick?targetWins=1`, { method: 'POST' });
+	assert.equal(res1w.status, 200);
+	const data1w = await res1w.json();
+	assert.match(data1w.roomId, /^quick-1w-/);
+	assert.equal(data1w.targetWins, 1);
 });

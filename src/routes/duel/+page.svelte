@@ -47,6 +47,8 @@
 	let opponent = $state<DuelPlayerInfo | null>(null);
 	let currentRound = $state(1);
 	let wins = $state<Record<PlayerId, number>>({ p1: 0, p2: 0 });
+	let selectedTargetWins = $state<number>(2);
+	let matchTargetWins = $state<number>(2);
 	let countdownNumber = $state(0);
 	let roundResult = $state<'won' | 'lost' | null>(null);
 	let matchResult = $state<'won' | 'lost' | null>(null);
@@ -144,20 +146,25 @@
 		}
 	}
 
-	function connectToRoom(targetRoom: string) {
+	function connectToRoom(targetRoom: string, customWins?: number) {
 		disconnectWs();
 		roomId = targetRoom;
+		if (customWins) {
+			selectedTargetWins = customWins;
+			matchTargetWins = customWins;
+		}
 		errorMessage = '';
 		pageState = 'waiting';
 
 		if (typeof window !== 'undefined') {
 			const url = new URL(window.location.href);
 			url.searchParams.set('room', targetRoom);
+			url.searchParams.set('wins', String(selectedTargetWins));
 			shareUrl = url.toString();
 			window.history.replaceState({}, '', url.toString());
 
 			const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-			const wsUrl = `${protocol}//${window.location.host}/api/duel/ws?room=${encodeURIComponent(targetRoom)}&name=${encodeURIComponent(playerName)}`;
+			const wsUrl = `${protocol}//${window.location.host}/api/duel/ws?room=${encodeURIComponent(targetRoom)}&name=${encodeURIComponent(playerName)}&targetWins=${selectedTargetWins}`;
 
 			const socket = new WebSocket(wsUrl);
 			ws = socket;
@@ -190,11 +197,13 @@
 			case 'welcome': {
 				myPlayerId = msg.playerId;
 				roomId = msg.roomId;
+				if (msg.targetWins) matchTargetWins = msg.targetWins;
 				break;
 			}
 			case 'room_state': {
 				wins = msg.wins;
 				currentRound = msg.round;
+				if (msg.targetWins) matchTargetWins = msg.targetWins;
 
 				const me = msg.players.find((p: DuelPlayerInfo) => p.id === myPlayerId);
 				const opp = msg.players.find((p: DuelPlayerInfo) => p.id !== myPlayerId);
@@ -386,10 +395,12 @@
 		isQuickJoining = true;
 		errorMessage = '';
 		try {
-			const res = await fetch('/api/duel/quick', { method: 'POST' });
+			const res = await fetch(`/api/duel/quick?targetWins=${selectedTargetWins}`, {
+				method: 'POST'
+			});
 			if (!res.ok) throw new Error('Quick play failed');
-			const data = (await res.json()) as { roomId: string };
-			connectToRoom(data.roomId);
+			const data = (await res.json()) as { roomId: string; targetWins?: number };
+			connectToRoom(data.roomId, data.targetWins ?? selectedTargetWins);
 		} catch {
 			errorMessage = i18n.t.duel.connectionError;
 		} finally {
@@ -399,13 +410,13 @@
 
 	function createPrivateRoom() {
 		const code = 'room-' + Math.random().toString(36).substring(2, 8);
-		connectToRoom(code);
+		connectToRoom(code, selectedTargetWins);
 	}
 
 	function joinByCode() {
 		const code = inputRoomCode.trim();
 		if (code) {
-			connectToRoom(code);
+			connectToRoom(code, selectedTargetWins);
 		}
 	}
 
@@ -430,6 +441,7 @@
 		if (typeof window !== 'undefined') {
 			const url = new URL(window.location.href);
 			url.searchParams.delete('room');
+			url.searchParams.delete('wins');
 			window.history.replaceState({}, '', url.toString());
 		}
 	}
@@ -455,8 +467,13 @@
 		// If ?room=... is present in URL, connect immediately!
 		const urlParams = new URLSearchParams(window.location.search);
 		const initialRoom = urlParams.get('room');
+		const initialWins = parseInt(urlParams.get('wins') || urlParams.get('targetWins') || '', 10);
+		if (initialWins === 1 || initialWins === 2 || initialWins === 3) {
+			selectedTargetWins = initialWins;
+			matchTargetWins = initialWins;
+		}
 		if (initialRoom) {
-			connectToRoom(initialRoom);
+			connectToRoom(initialRoom, initialWins || selectedTargetWins);
 		}
 	});
 
@@ -495,6 +512,28 @@
 					placeholder="Игрок"
 					onchange={() => localStorage.setItem('tetris_player_name', playerName)}
 				/>
+			</div>
+
+			<div class="format-section">
+				<span class="format-label">{i18n.t.duel.formatLabel}</span>
+				<div class="format-options">
+					<button
+						type="button"
+						class="format-btn"
+						class:active={selectedTargetWins === 1}
+						onclick={() => (selectedTargetWins = 1)}
+					>
+						{i18n.t.duel.formatBestOf1}
+					</button>
+					<button
+						type="button"
+						class="format-btn"
+						class:active={selectedTargetWins === 2}
+						onclick={() => (selectedTargetWins = 2)}
+					>
+						{i18n.t.duel.formatBestOf3}
+					</button>
+				</div>
 			</div>
 
 			<div class="modes-grid">
@@ -564,7 +603,11 @@
 			<div class="duel-hud">
 				<div class="hud-meta">
 					<span class="round-badge">
-						{i18n.t.duel.roundOf.replace('{round}', String(currentRound))}
+						{matchTargetWins === 1
+							? i18n.t.duel.roundOfSingle.replace('{round}', String(currentRound))
+							: i18n.t.duel.roundOf
+									.replace('{round}', String(currentRound))
+									.replace('{wins}', String(matchTargetWins))}
 					</span>
 					<button
 						class="settings-btn"
@@ -579,7 +622,7 @@
 					<div class="player-hud you">
 						<span class="hud-name">{playerName} ({i18n.t.duel.you})</span>
 						<div class="stars">
-							{#each Array.from({ length: 2 }) as _, i}
+							{#each Array.from({ length: matchTargetWins }) as _, i}
 								<span class="star" class:filled={i < myWins}>★</span>
 							{/each}
 						</div>
@@ -590,7 +633,7 @@
 					<div class="player-hud opp">
 						<span class="hud-name">{oppName}</span>
 						<div class="stars">
-							{#each Array.from({ length: 2 }) as _, i}
+							{#each Array.from({ length: matchTargetWins }) as _, i}
 								<span class="star" class:filled={i < oppWins}>★</span>
 							{/each}
 						</div>
@@ -673,7 +716,7 @@
 						score={opponentScore}
 						lines={opponentLines}
 						wins={oppWins}
-						targetWins={2}
+						targetWins={matchTargetWins}
 					/>
 				</div>
 			</div>
@@ -854,6 +897,44 @@
 	}
 	.name-input:focus {
 		border-color: #38bdf8;
+	}
+	.format-section {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		margin-bottom: 1.75rem;
+	}
+	.format-label {
+		font-size: 0.85rem;
+		color: #94a3b8;
+		font-weight: 500;
+	}
+	.format-options {
+		display: flex;
+		gap: 0.75rem;
+	}
+	.format-btn {
+		flex: 1;
+		background: #1e293b;
+		border: 1px solid #334155;
+		color: #94a3b8;
+		border-radius: 0.5rem;
+		padding: 0.65rem 0.75rem;
+		font-size: 0.9rem;
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 0.2s ease;
+		text-align: center;
+	}
+	.format-btn:hover {
+		border-color: #64748b;
+		color: #f1f5f9;
+	}
+	.format-btn.active {
+		background: #0369a1;
+		border-color: #38bdf8;
+		color: #fff;
+		box-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
 	}
 	.modes-grid {
 		display: grid;

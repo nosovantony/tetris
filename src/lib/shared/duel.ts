@@ -20,13 +20,14 @@ export type DuelClientMessage =
 	| { type: 'rematch' };
 
 export type DuelServerMessage =
-	| { type: 'welcome'; playerId: PlayerId; roomId: string }
+	| { type: 'welcome'; playerId: PlayerId; roomId: string; targetWins?: number }
 	| {
 			type: 'room_state';
 			status: DuelRoomStatus;
 			players: DuelPlayerInfo[];
 			round: number;
 			wins: Record<PlayerId, number>;
+			targetWins: number;
 	  }
 	| { type: 'start_countdown'; countdown: number; round: number; seed: number }
 	| { type: 'round_start'; round: number; seed: number }

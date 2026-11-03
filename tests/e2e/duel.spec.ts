@@ -105,4 +105,39 @@ test.describe('Duel 1v1 Mode', () => {
 		await context1.close();
 		await context2.close();
 	});
+
+	test('allows selecting Best of 1 format and playing a 1-win match', async ({ browser }) => {
+		const context1 = await browser.newContext();
+		const context2 = await browser.newContext();
+		const page1 = await context1.newPage();
+		const page2 = await context2.newPage();
+
+		await page1.goto('/duel');
+		const bestOf1Btn = page1.getByRole('button', { name: /До 1 победы|First to 1 win/i });
+		await expect(bestOf1Btn).toBeVisible();
+		await bestOf1Btn.click();
+		await expect(bestOf1Btn).toHaveClass(/active/);
+
+		const createBtn = page1.getByRole('button', { name: /Создать комнату|Create Private Room/i });
+		await createBtn.click();
+
+		const shareInput = page1.locator('.share-input');
+		await expect(shareInput).toBeVisible();
+		const shareUrl = await shareInput.inputValue();
+		expect(shareUrl).toContain('wins=1');
+
+		// Second player joins via that link
+		await page2.goto(shareUrl);
+
+		// Both receive countdown and see "до 1 победы" / 1 star in HUD
+		await expect(page1.locator('.countdown-num')).toBeVisible({ timeout: 10000 });
+		await expect(page2.locator('.countdown-num')).toBeVisible({ timeout: 10000 });
+
+		await expect(page1.locator('.round-badge')).toContainText(/до 1 победы|first to 1/i);
+		await expect(page1.locator('.player-hud.you .star')).toHaveCount(1);
+		await expect(page1.locator('.player-hud.opp .star')).toHaveCount(1);
+
+		await context1.close();
+		await context2.close();
+	});
 });
