@@ -1,23 +1,21 @@
-# Выпуск в Cloudflare — 2026-11-02
+# Выпуск в Cloudflare — 2026-11-03
 
-Этот документ описывает уже опубликованную тренировку. Новая рабочая реализация
-рейтинга с HMAC/ValidationDO опубликована **только в отдельном staging** —
-[STAGING.md](STAGING.md); production не обновлялся. Контракт нового выпуска —
-в [RUN-PROTOCOL.md](RUN-PROTOCOL.md). Миграция `v2` добавляет только ValidationDO
-и не изменяет/удаляет существующий namespace LeaderboardDO.
+В production развёрнута полная версия игры: **режим тренировки (1–150 уровней) и рейтинговый режим**
+с криптографической HMAC-сессией, серверной валидацией replay через отдельный `ValidationDO`,
+атомарным сохранением рекордов в SQLite `LeaderboardDO`, Edge Cache API и приватным профилем игрока.
 
 Адрес игры: **https://tetris-web.nosov-antony.workers.dev**.
 
 Развёрнуты два Worker:
 
 - `tetris-backend`: без workers.dev, preview URL и публичных routes; экспортирует
-  `LeaderboardDO` с SQLite-миграцией `v1`. Доступ только через Service Binding.
-- `tetris-web`: статические ресурсы и SvelteKit API; Service Binding `BACKEND`
+  `LeaderboardDO` (SQLite migration `v1`) и `ValidationDO` (SQLite migration `v2`).
+  Установлен production-секрет `RUN_SIGNING_KEY`. Доступ только через закрытый Service Binding.
+  Текущая версия backend: `fa2c8389-2a01-430c-b312-ed0f0064139c`.
+- `tetris-web`: статические векторные ресурсы и SvelteKit API; Service Binding `BACKEND`
   ведёт на `tetris-backend`.
-
-Первый выпуск backend: `941f817e-0f12-46c9-b8f7-86f0ca18f475`.
-Текущий web: `7f3f11e2-8099-4103-88c5-8f209f52f2a6`.
-Версии последующих выпусков можно посмотреть через `wrangler deployments list`.
+  Текущая версия web: `337947cd-5bea-4a4e-8e8a-214bccf0d128`.
+  Версии последующих выпусков можно посмотреть через `wrangler deployments list`.
 
 ## Повторный ручной выпуск
 
