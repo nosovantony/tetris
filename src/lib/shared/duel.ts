@@ -15,6 +15,7 @@ export type DuelRoomStatus = 'waiting' | 'countdown' | 'playing' | 'round_end' |
 export type DuelClientMessage =
 	| { type: 'join'; name: string }
 	| { type: 'board'; board: Cell[][]; score: number; lines: number }
+	| { type: 'activity' }
 	| { type: 'attack'; lines: number }
 	| { type: 'top_out' }
 	| { type: 'rematch' };

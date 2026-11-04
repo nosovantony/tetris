@@ -150,6 +150,31 @@ test.describe('Duel 1v1 Mode', () => {
 		}
 	});
 
+	test('automatically starts the round and forfeits an opponent who never moves', async ({
+		browser
+	}) => {
+		const context1 = await browser.newContext();
+		const context2 = await browser.newContext();
+		const page1 = await context1.newPage();
+		const page2 = await context2.newPage();
+		try {
+			const roomId = 'room-afk-' + Math.random().toString(36).slice(2, 7);
+			await page1.goto(`/duel?room=${roomId}`);
+			await page2.goto(`/duel?room=${roomId}`);
+			await expect(page1.locator('.countdown-num')).toBeVisible({ timeout: 10000 });
+			await expect(page1.locator('.countdown-num')).not.toBeVisible({ timeout: 10000 });
+
+			// No ready/start button is needed. Player 1 makes one real move;
+			// the server awards the round when player 2 remains untouched.
+			await page1.keyboard.press('ArrowLeft');
+			await expect(page1.locator('.round-overlay')).toBeVisible({ timeout: 15000 });
+			await expect(page1.locator('.round-overlay')).toContainText(/побед|выигран|won/i);
+		} finally {
+			await context1.close();
+			await context2.close();
+		}
+	});
+
 	test('allows selecting Best of 1 format and playing a 1-win match', async ({ browser }) => {
 		const context1 = await browser.newContext();
 		const context2 = await browser.newContext();

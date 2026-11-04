@@ -77,6 +77,7 @@
 	// Input handling
 	const input = new InputMux((action: Action) => {
 		if (isPlaying && game.status === 'playing') {
+			sendWs({ type: 'activity' });
 			pendingActions.push(action);
 		}
 	});

@@ -7,12 +7,17 @@ import type {
 	PlayerId
 } from '../../src/lib/shared/duel';
 
+const INITIAL_ACTIVITY_TIMEOUT_MS = 10_000;
+type DuelSocket = { id: PlayerId; name: string; ready: boolean; actedThisRound: boolean };
+
 export class DuelRoomDO extends DurableObject {
-	private sockets = new Map<WebSocket, { id: PlayerId; name: string; ready: boolean }>();
+	private sockets = new Map<WebSocket, DuelSocket>();
 	private wins: Record<PlayerId, number> = { p1: 0, p2: 0 };
 	private round = 1;
 	private status: DuelRoomStatus = 'waiting';
 	private countdownTimer: ReturnType<typeof setTimeout> | null = null;
+	private inactivityTimer: ReturnType<typeof setInterval> | null = null;
+	private roundStartedAt = 0;
 	private currentSeed = 0;
 	private roomId = '';
 	private targetWins = 2;
@@ -67,7 +72,12 @@ export class DuelRoomDO extends DurableObject {
 		const [client, server] = Object.values(pair);
 		server.accept();
 
-		this.sockets.set(server, { id: playerId, name: playerName, ready: false });
+		this.sockets.set(server, {
+			id: playerId,
+			name: playerName,
+			ready: false,
+			actedThisRound: false
+		});
 
 		server.addEventListener('message', (event) => {
 			this.handleMessage(server, event.data);
@@ -126,12 +136,15 @@ export class DuelRoomDO extends DurableObject {
 				this.countdownTimer = setTimeout(tick, 1000);
 			} else {
 				this.status = 'playing';
+				this.roundStartedAt = Date.now();
+				for (const player of this.sockets.values()) player.actedThisRound = false;
 				this.broadcast({
 					type: 'round_start',
 					round: this.round,
 					seed: this.currentSeed
 				});
 				this.broadcastState();
+				this.startInactivityWatch();
 			}
 		};
 
@@ -151,6 +164,10 @@ export class DuelRoomDO extends DurableObject {
 		if (!senderPlayer) return;
 
 		switch (msg.type) {
+			case 'activity': {
+				if (this.status === 'playing') senderPlayer.actedThisRound = true;
+				break;
+			}
 			case 'board': {
 				this.sendToOpponent(sender, {
 					type: 'opponent_board',
@@ -173,35 +190,7 @@ export class DuelRoomDO extends DurableObject {
 			}
 			case 'top_out': {
 				if (this.status === 'playing') {
-					// The other player won this round!
-					const winnerId: PlayerId = senderPlayer.id === 'p1' ? 'p2' : 'p1';
-					this.wins[winnerId]++;
-
-					if (this.wins[winnerId] >= this.targetWins) {
-						// Match victory
-						this.status = 'match_end';
-						this.broadcast({
-							type: 'round_end',
-							winnerId,
-							wins: this.wins,
-							matchWinnerId: winnerId
-						});
-					} else {
-						// Next round
-						this.status = 'round_end';
-						this.broadcast({
-							type: 'round_end',
-							winnerId,
-							wins: this.wins
-						});
-						this.round++;
-						this.countdownTimer = setTimeout(() => {
-							if (this.sockets.size === 2) {
-								this.startCountdown();
-							}
-						}, 3000);
-					}
-					this.broadcastState();
+					this.finishRound(senderPlayer.id === 'p1' ? 'p2' : 'p1');
 				}
 				break;
 			}
@@ -242,6 +231,7 @@ export class DuelRoomDO extends DurableObject {
 			clearTimeout(this.countdownTimer);
 			this.countdownTimer = null;
 		}
+		this.stopInactivityWatch();
 
 		this.broadcast({
 			type: 'player_left',
@@ -249,6 +239,51 @@ export class DuelRoomDO extends DurableObject {
 		});
 
 		this.status = 'waiting';
+		this.broadcastState();
+	}
+
+	private startInactivityWatch(): void {
+		this.stopInactivityWatch();
+		this.inactivityTimer = setInterval(() => {
+			if (this.status !== 'playing') {
+				this.stopInactivityWatch();
+				return;
+			}
+			if (Date.now() - this.roundStartedAt < INITIAL_ACTIVITY_TIMEOUT_MS) return;
+
+			const players = Array.from(this.sockets.values());
+			const activePlayers = players.filter((player) => player.actedThisRound);
+			// If both players are idle, do not award a random win. As soon as
+			// one player makes a move, the untouched player forfeits.
+			if (activePlayers.length !== 1) return;
+			const inactive = players.find((player) => !player.actedThisRound);
+			if (inactive) this.finishRound(inactive.id === 'p1' ? 'p2' : 'p1');
+		}, 1000);
+	}
+
+	private stopInactivityWatch(): void {
+		if (this.inactivityTimer) {
+			clearInterval(this.inactivityTimer);
+			this.inactivityTimer = null;
+		}
+	}
+
+	private finishRound(winnerId: PlayerId): void {
+		if (this.status !== 'playing') return;
+		this.stopInactivityWatch();
+		this.wins[winnerId]++;
+
+		if (this.wins[winnerId] >= this.targetWins) {
+			this.status = 'match_end';
+			this.broadcast({ type: 'round_end', winnerId, wins: this.wins, matchWinnerId: winnerId });
+		} else {
+			this.status = 'round_end';
+			this.broadcast({ type: 'round_end', winnerId, wins: this.wins });
+			this.round++;
+			this.countdownTimer = setTimeout(() => {
+				if (this.sockets.size === 2) this.startCountdown();
+			}, 3000);
+		}
 		this.broadcastState();
 	}
 
